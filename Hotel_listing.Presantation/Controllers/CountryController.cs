@@ -12,14 +12,15 @@ public class CountryController:BaseController<Country>
     { }
 
     [HttpGet]
-    public async Task<ActionResult<List<Country>>> GetCountries()
+    public async Task<IActionResult> GetCountries()
     {
-        Logger.LogInformation("test");
+        string test = Test("");
+        Logger.LogInformation(test);
         return Ok(await Query.Countries.GetAll());
     }
         
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Country>> GetCountry(int id)
+    public async Task<IActionResult> GetCountry(int id)
     {
         return Ok(await Query.Countries.Get(country =>country.CountryId==id , new List<string>(){"Hotels"}));
     }

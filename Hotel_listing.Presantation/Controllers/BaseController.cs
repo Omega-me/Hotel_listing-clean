@@ -23,4 +23,10 @@ public class BaseController<T>:ControllerBase where T:class
         Mapper = mapper;
         Logger = logger;
     }
+
+    // A set of virtual methods here which can be override on the children classes 
+    protected virtual string Test(string text)
+    {
+        return text;
+    }
 }
