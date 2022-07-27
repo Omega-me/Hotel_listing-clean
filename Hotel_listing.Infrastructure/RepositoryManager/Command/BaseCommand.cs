@@ -23,9 +23,10 @@ public class BaseCommand<T>:IBaseCommand<T> where T:class
         await _db.AddRangeAsync(enitites);
     }
 
-    public async Task Delete(int id) {
+    public async Task Delete(int id)
+    {
         var entity =await _db.FindAsync(id);
-        _db.Remove(entity);
+        if (entity != null) _db.Remove(entity);
     }
 
     public void DeleteRange(IEnumerable<T> enitites) {
