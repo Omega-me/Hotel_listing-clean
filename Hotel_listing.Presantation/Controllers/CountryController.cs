@@ -15,7 +15,7 @@ public class CountryController:BaseController<Country>
     public async Task<ActionResult<List<Country>>> GetCountries()
     {
         Logger.LogInformation("test");
-        return Ok(await Query.Countries.GetAll());
+        return Ok(await Query.Countries.GetAll(null,null,new List<string>{"Hotels"}));
     }
         
     [HttpGet("{id:int}")]

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hotel_listing.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220726123203_initial")]
-    partial class initial
+    [Migration("20220726192431_hotel-optional-field-to-country")]
+    partial class hoteloptionalfieldtocountry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
