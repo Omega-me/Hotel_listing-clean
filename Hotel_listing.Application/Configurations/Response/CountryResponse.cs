@@ -4,5 +4,5 @@ namespace Hotel_listing.Application.Configurations.Response;
 
 public class CountryResponse : BaseResponse<object, object>, ICountryResponse
 {
-    public string Token { get; set; }
+    public string? Token { get; set; }
 }

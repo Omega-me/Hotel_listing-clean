@@ -2,5 +2,5 @@
 
 public interface ICountryResponse
 {
-    string Token { get; set; }
+    string? Token { get; set; }
 }

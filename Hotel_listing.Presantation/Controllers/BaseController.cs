@@ -25,20 +25,20 @@ public class BaseController<T>:ControllerBase where T:class
     }
 
     // A set of virtual methods here which can be override on the children classes 
-    protected virtual ActionResult HandleResponse(BaseResponse<object,object> baseResult)
+    protected virtual ActionResult HandleResponse(BaseResponse<object,object> response)
     {
-        switch (baseResult.StatusCode)
+        switch (response.StatusCode)
         {
             case StatusCodes.Status200OK:
-                return Ok(baseResult); 
+                return Ok(response); 
             case StatusCodes.Status201Created:
-                return Created("",baseResult.Data); 
+                return Created("",response.Data); 
             case StatusCodes.Status204NoContent:
                 return NoContent(); 
             case StatusCodes.Status400BadRequest:
-                return BadRequest(baseResult.Errors);
+                return BadRequest(response.Errors);
             case StatusCodes.Status401Unauthorized:
-                return Unauthorized(baseResult.Errors);
+                return Unauthorized(response.Errors);
             case StatusCodes.Status403Forbidden:
                 return Forbid();
             case StatusCodes.Status404NotFound:
@@ -46,7 +46,7 @@ public class BaseController<T>:ControllerBase where T:class
             case StatusCodes.Status409Conflict:
                 return Conflict();
             default:
-                return Ok(baseResult);
+                return Ok(response);
         }
     }
 }
