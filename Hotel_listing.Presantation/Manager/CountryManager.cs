@@ -5,7 +5,7 @@ namespace Hotel_listing.Presantation.Manager;
 
 public static class CountryManager
 {
-    public static CountryResponse GetCountires(IList<Country>? resultObject)
+    public static CountryResponse Response(IList<Country>? resultObject)
     {
         if (resultObject == null)
         {
@@ -26,7 +26,7 @@ public static class CountryManager
             r.Data = resultObject;
         });
     }
-    public static BaseResponse<object,object> GetCountry(Country? resultObject)
+    public static BaseResponse<object,object> Response(Country? resultObject)
     {
         if (resultObject == null)
         {

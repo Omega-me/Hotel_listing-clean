@@ -36,7 +36,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Aplication stoped working");
+    Log.Fatal(ex, "Application stopped working");
 }
 finally
 {

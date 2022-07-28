@@ -16,13 +16,13 @@ public class CountryController:BaseController<Country>
     [HttpGet]
     public async Task<ActionResult<List<Country>>> GetCountries()
     {
-        return HandleResponse(CountryManager.GetCountires(await Query.Countries.GetAll()));
+        return HandleResponse(CountryManager.Response(await Query.Countries.GetAll()));
     }
         
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Country>> GetCountry(int id)
     {
-        return HandleResponse(CountryManager.GetCountry(await Query.Countries.Get(country => country.CountryId == id, new List<string>() {"Hotels"})));
+        return HandleResponse(CountryManager.Response(await Query.Countries.Get(country => country.CountryId == id, new List<string>() {"Hotels"})));
     }
 
     [HttpPost]
@@ -31,6 +31,6 @@ public class CountryController:BaseController<Country>
         await Command.Countries.Insert(country);
         await Command.Save();
         return HandleResponse(
-            CountryManager.GetCountry(await Query.Countries.Get(c => c.CountryId == country.CountryId)));
+            CountryManager.Response(await Query.Countries.Get(c => c.CountryId == country.CountryId)));
     }
 }
