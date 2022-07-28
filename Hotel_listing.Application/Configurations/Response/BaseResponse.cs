@@ -1,5 +1,4 @@
 ﻿using Hotel_listing.Application.Contracts.Response;
-using Serilog;
 
 namespace Hotel_listing.Application.Configurations.Response;
 
@@ -12,7 +11,6 @@ public class BaseResponse<TData,TError> : IBaseResponse<TData, TError>
     public int StatusCode { get; set; }
     public T BuildResult<T>(Action<T> responseBuilder) where T : new()
     {
-        Log.Warning("Data fetched");
         var response = new T();
         responseBuilder.Invoke(response);
         return response;
