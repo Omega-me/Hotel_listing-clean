@@ -9,10 +9,10 @@ public class BaseResponse<TData,TError> : IBaseResponse<TData, TError>
     public TData? Data { get; set; }
     public TError? Errors { get; set; }
     public int StatusCode { get; set; }
-    public T BuildResult<T>(Action<T> responseBuilder) where T : new()
+    public T BuildResult<T>(Action<T>? responseBuilder) where T : new()
     {
         var response = new T();
-        responseBuilder.Invoke(response);
+        responseBuilder?.Invoke(response);
         return response;
     }
 }

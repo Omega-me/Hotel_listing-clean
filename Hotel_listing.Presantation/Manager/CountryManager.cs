@@ -9,14 +9,14 @@ public static class CountryManager
     {
         if (resultObject == null)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse().BuildCountryResult(r =>
             {
                 r.Success = false;
                 r.StatusCode = StatusCodes.Status400BadRequest;
                 r.Errors = "There wa a problem";
             });
         }
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        return new CountryResponse().BuildCountryResult(r =>
         {
             r.StatusCode = StatusCodes.Status200OK;
             r.Results = resultObject.Count;

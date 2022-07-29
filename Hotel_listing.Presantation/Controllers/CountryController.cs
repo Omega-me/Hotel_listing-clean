@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
@@ -13,6 +14,7 @@ public class CountryController:BaseController<Country>
         : base(query,command,mapper)
     { }
 
+    
     [HttpGet]
     public async Task<ActionResult<List<Country>>> GetCountries()
     {

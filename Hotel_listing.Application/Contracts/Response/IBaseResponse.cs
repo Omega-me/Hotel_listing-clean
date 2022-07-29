@@ -7,5 +7,5 @@ public interface IBaseResponse<TData, TError>
     TData? Data { get; set; }
     TError? Errors { get; set; }
     int StatusCode { get; set; }
-    T BuildResult<T>(Action<T> responseBuilder) where T:new();
+    T BuildResult<T>(Action<T>? responseBuilder) where T:new();
 }
