@@ -1,7 +1,7 @@
 ﻿using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Domain.Entitites;
 
-namespace Hotel_listing.Presantation.Manager;
+namespace Hotel_listing.Presantation.Managers;
 
 public static class CountryManager
 {

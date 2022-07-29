@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
-using Hotel_listing.Presantation.Manager;
+using Hotel_listing.Presantation.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_listing.Presantation.Controllers;
