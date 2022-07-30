@@ -13,7 +13,6 @@ public class CountryController:BaseController<Country>
         : base(query,command,mapper)
     { }
 
-    
     [HttpGet]
     public async Task<ActionResult<List<Country>>> GetCountries()
     {
