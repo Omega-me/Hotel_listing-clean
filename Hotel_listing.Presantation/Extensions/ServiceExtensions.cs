@@ -2,10 +2,11 @@
 using Hotel_listing.Application.Configurations;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
-using Hotel_listing.Application.Validation.Country;
+using Hotel_listing.Application.Validation;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Hotel_listing.Infrastructure.RepositoryManager.Command;
 using Hotel_listing.Infrastructure.RepositoryManager.Query;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -44,13 +45,22 @@ public static class ServiceExtensions
     }
     public static void ConfigureControllers(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddControllers()
+        serviceCollection.AddControllers(o =>
+            {
+                // o.Filters.Add(typeof(ModelStateFilter));
+            })
             .AddFluentValidation(v =>
             {
                 v.RegisterValidatorsFromAssemblyContaining<RegisterValidator>();
             })
             .AddNewtonsoftJson(options => 
-                options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-            ;
+                options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+    }
+
+    public static void ConfigureApiBehavior(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.Configure<ApiBehaviorOptions>(
+            o=>o.SuppressModelStateInvalidFilter=true
+        );
     }
 }

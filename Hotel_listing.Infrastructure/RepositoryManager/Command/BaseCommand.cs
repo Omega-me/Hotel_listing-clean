@@ -19,10 +19,11 @@ public class BaseCommand<T>:IBaseCommand<T> where T:class
         await _db.AddAsync(entity);
     }
 
-    public async Task InsertRange(IEnumerable<T> enitites) {
-        await _db.AddRangeAsync(enitites);
+    public void Update(T entity) {
+        _db.Attach(entity);
+        _context.Entry(entity).State = EntityState.Modified;
     }
-
+    
     public async Task Delete(int id)
     {
         var entity =await _db.FindAsync(id);
@@ -33,8 +34,4 @@ public class BaseCommand<T>:IBaseCommand<T> where T:class
         _db.RemoveRange(enitites);
     }
 
-    public void Update(T entity) {
-        _db.Attach(entity);
-        _context.Entry(entity).State = EntityState.Modified;
-    }
 }

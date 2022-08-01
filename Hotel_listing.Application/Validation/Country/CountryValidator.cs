@@ -7,7 +7,14 @@ public class CountryValidator:AbstractValidator<CreateCountryDTO>
 {
     public CountryValidator()
     {
-        RuleFor(c => c.Name).NotEmpty().WithMessage("Country should have a name").NotNull();
-        RuleFor(c=>c.ShortName).NotEmpty().WithMessage("Country should have a short name").Length(2,2).NotNull();
+        RuleFor(c => c.Name)
+            .Cascade(CascadeMode.StopOnFirstFailure)
+            .NotEmpty()
+            .NotNull();
+        RuleFor(c=>c.ShortName)
+            .Cascade(CascadeMode.StopOnFirstFailure)
+            .NotEmpty()
+            .Length(2,2)
+            .NotNull();
     }   
 }

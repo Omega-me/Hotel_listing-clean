@@ -12,7 +12,7 @@ public static class CountryManager
     #region Managers and response builders
     public static async Task<BaseResponse<object, object>> GetCountries(IQuery query)
     {
-        IList<Country> countries =await query.Countries.GetAll();
+        IList<Country> countries =await query.Countries.GetAll(null,null,new List<string>{"Hotels"});
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
             r.Data = countries;
@@ -34,7 +34,10 @@ public static class CountryManager
                 r.Data = null;
                 r.Success = false;
                 r.StatusCode = StatusCodes.Status404NotFound;
-                r.Errors = "The Country you are looking fore does not exists";
+                r.Errors = new List<string>
+                {
+                    "The Country you are looking for does not exists."
+                };
             });
             
         }
@@ -56,17 +59,6 @@ public static class CountryManager
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
         {
             r.Data = data;
-            r.StatusCode = StatusCodes.Status201Created;
-        });
-    }
-    public static async Task<CountryResponse> CreateCountries(IList<CreateCountryDTO> data,ICommands command,IMapper mapper)
-    {
-        var countries = mapper.Map<IList<Country>>(data);
-        await command.Countries.InsertRange(countries);
-        await command.Save();
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
-        {
-            r.Data = countries;
             r.StatusCode = StatusCodes.Status201Created;
         });
     }

@@ -3,8 +3,7 @@
 public interface IBaseCommand<T> where T:class
 {
     Task Insert(T entity);
-    Task InsertRange(IEnumerable<T> enitites);
+    void Update(T entity);       
     Task Delete(int id);
     void DeleteRange(IEnumerable<T> enitites);
-    void Update(T entity);       
 }

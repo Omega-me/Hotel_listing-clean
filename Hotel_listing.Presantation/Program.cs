@@ -1,4 +1,3 @@
-using FluentValidation.AspNetCore;
 using Hotel_listing.Application.Configurations;
 using Hotel_listing.Presantation.Extensions;
 using Serilog;
@@ -19,6 +18,7 @@ try
     builder.Services.ConfigureDbContext(builder.Configuration);
     builder.Services.ConfigureSwagger();
     builder.Services.AddAutoMapper(typeof(MapperConfig));
+    // builder.Services.ConfigureApiBehavior();
     #endregion
 
     var app = builder.Build();

@@ -31,10 +31,4 @@ public class CountryController:BaseController<Country>
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
     }
-    
-    [HttpPost("insertrange")]
-    public async Task<ActionResult<List<Country>>> CreateCountries([FromBody] IList<CreateCountryDTO> data)
-    {
-        return HandleResponse(await CountryManager.CreateCountries(data,Command,Mapper));
-    }
 }
