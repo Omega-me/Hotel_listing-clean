@@ -1,5 +1,8 @@
-﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+﻿using FluentValidation.AspNetCore;
+using Hotel_listing.Application.Configurations;
+using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
+using Hotel_listing.Application.Validation.Country;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Hotel_listing.Infrastructure.RepositoryManager.Command;
 using Hotel_listing.Infrastructure.RepositoryManager.Query;
@@ -38,5 +41,16 @@ public static class ServiceExtensions
         {
             c.SwaggerDoc("v1", new OpenApiInfo {Title = "Hotel Listing", Version = "v1"});
         });
+    }
+    public static void ConfigureControllers(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddControllers()
+            .AddFluentValidation(v =>
+            {
+                v.RegisterValidatorsFromAssemblyContaining<RegisterValidator>();
+            })
+            .AddNewtonsoftJson(options => 
+                options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+            ;
     }
 }

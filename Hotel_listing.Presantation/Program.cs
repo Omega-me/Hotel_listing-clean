@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Hotel_listing.Application.Configurations;
 using Hotel_listing.Presantation.Extensions;
 using Serilog;
@@ -12,7 +13,7 @@ try
 
     #region Container services
     builder.Services.ConfigureRepository();
-    builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+    builder.Services.ConfigureControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.ConfigureCors();
     builder.Services.ConfigureDbContext(builder.Configuration);

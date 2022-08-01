@@ -15,27 +15,26 @@ public class CountryController:BaseController<Country>
     { }
 
     [HttpGet]
-    public async Task<ActionResult<List<CountryDTO>>> GetCountries()
+    public async Task<ActionResult<List<Country>>> GetCountries()
     {
-        return HandleResponse(CountryManager.Response(await Query.Countries.GetAll()));
+        return HandleResponse(await CountryManager.GetCountries(Query));
     }
         
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<CountryDTO>> GetCountry(int id)
+    public async Task<ActionResult<Country>> GetCountry(int id)
     {
-        return HandleResponse(CountryManager.Response(await Query.Countries.Get(country => country.CountryId == id, new List<string>() {"Hotels"})));
+        return HandleResponse(await CountryManager.GetCountry(id, Query));
     }
 
     [HttpPost]
-    public async Task<ActionResult<CountryDTO>> CreateCountry([FromBody] CreateCountryDTO data)
+    public async Task<ActionResult<Country>> CreateCountry([FromBody] CreateCountryDTO data)
     {
-        // return HandleResponse(CountryManager.Response(await CountryManager.CreateCountry(data,Command,Mapper)));
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
     }
     
     [HttpPost("insertrange")]
-    public async Task<IActionResult> CreateCountries([FromBody] IList<CreateCountryDTO> data)
+    public async Task<ActionResult<List<Country>>> CreateCountries([FromBody] IList<CreateCountryDTO> data)
     {
-        return HandleResponse(CountryManager.Response(await CountryManager.CreateCountries(data,Command,Mapper)));
+        return HandleResponse(await CountryManager.CreateCountries(data,Command,Mapper));
     }
 }

@@ -38,15 +38,15 @@ public class BaseController<T>:ControllerBase where T:class
             case StatusCodes.Status204NoContent:
                 return NoContent(); 
             case StatusCodes.Status400BadRequest:
-                return BadRequest(response.Errors);
+                return BadRequest(response);
             case StatusCodes.Status401Unauthorized:
                 return Unauthorized(response.Errors);
             case StatusCodes.Status403Forbidden:
-                return Forbid();
+                return Forbid(response);
             case StatusCodes.Status404NotFound:
-                return NotFound();
+                return NotFound(response);
             case StatusCodes.Status409Conflict:
-                return Conflict();
+                return Conflict(response);
             default:
                 return Ok(response);
         }
@@ -57,11 +57,10 @@ public class BaseController<T>:ControllerBase where T:class
     }
     protected virtual ActionResult HandleResponse(CountryResponse response)
     {
-        if (response.Token is null)
+        if (response.Token == "null")
         {
-            return BadRequest();
+            return BadRequest(response);
         }
-
         return ResponseBuilder(response);
     }
     #endregion

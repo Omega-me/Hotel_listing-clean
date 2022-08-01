@@ -9,91 +9,66 @@ namespace Hotel_listing.Presantation.Managers;
 
 public static class CountryManager
 {
-    #region Response Builders
-    public static CountryResponse Response(IList<Country>? resultObject)
+    #region Managers and response builders
+    public static async Task<BaseResponse<object, object>> GetCountries(IQuery query)
     {
-        if (resultObject == null)
+        IList<Country> countries =await query.Countries.GetAll();
+        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
-            return new CountryResponse().BuildCountryResult(r =>
-            {
-                r.Success = false;
-                r.StatusCode = StatusCodes.Status400BadRequest;
-                r.Errors = "There wa a problem";
-            });
-        }
-        return new CountryResponse().BuildCountryResult(r =>
-        {
+            r.Data = countries;
             r.StatusCode = StatusCodes.Status200OK;
-            r.Results = resultObject.Count;
             r.Success = true;
-            r.Token = "6225DCE5-59C6-4657-A8C0-7AFC87E6B9D4";
             r.Errors = null;
-            r.Data = resultObject;
+            r.Results = countries.Count;
         });
     }
-    public static BaseResponse<object,object> Response(Country? resultObject)
+    public static async Task<BaseResponse<object, object>> GetCountry(int id, IQuery query)
     {
-        if (resultObject == null)
+        Country country = await query.Countries.Get(c => c.CountryId == id);
+
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (country == null)
         {
-            return new BaseResponse<object, object>()
-            .BuildResult<BaseResponse<object, object>>(r =>
+            return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
             {
+                r.Data = null;
                 r.Success = false;
                 r.StatusCode = StatusCodes.Status404NotFound;
+                r.Errors = "The Country you are looking fore does not exists";
             });
-        }
-
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
-        {
-            r.Data = resultObject;
-            r.Errors = null;
-            r.Results = 1;
-            r.Success = true;
-            r.StatusCode = StatusCodes.Status200OK;
-        });
-    }
-    #endregion
-
-    #region Managers
-    // public static async Task<Country> CreateCountry(CreateCountryDTO data,ICommands command,IMapper mapper)
-    // {
-    //     var country = mapper.Map<Country>(data);
-    //     await command.Countries.Insert(country);
-    //     await command.Save();
-    //     return country;
-    // }
-    public static async Task<BaseResponse<object, object>> CreateCountry(CreateCountryDTO data,ICommands command,IMapper mapper)
-    {
-        if (data == null)
-        {
-            return new BaseResponse<object, object>()
-                .BuildResult<BaseResponse<object, object>>(r =>
-                {
-                    r.Success = false;
-                    r.StatusCode = StatusCodes.Status404NotFound;
-                    r.Errors = "There was a problem with data object";
-                });
+            
         }
         
+        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+        {
+            r.Data = country;
+            r.Success = true;
+            r.StatusCode = StatusCodes.Status200OK;
+            r.Results = 1;
+            r.Errors = null;
+        });
+    }
+    public static async Task<BaseResponse<object, object>> CreateCountry(CreateCountryDTO data,ICommands command,IMapper mapper)
+    {
         var country = mapper.Map<Country>(data);
         await command.Countries.Insert(country);
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
         {
             r.Data = data;
-            r.Errors = null;
-            r.Results = 1;
-            r.Success = true;
-            r.StatusCode = StatusCodes.Status200OK;
+            r.StatusCode = StatusCodes.Status201Created;
         });
     }
-    
-    public static async Task<IList<Country>> CreateCountries(IList<CreateCountryDTO> data,ICommands command,IMapper mapper)
+    public static async Task<CountryResponse> CreateCountries(IList<CreateCountryDTO> data,ICommands command,IMapper mapper)
     {
         var countries = mapper.Map<IList<Country>>(data);
         await command.Countries.InsertRange(countries);
         await command.Save();
-        return countries;
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        {
+            r.Data = countries;
+            r.StatusCode = StatusCodes.Status201Created;
+        });
     }
     #endregion
 }
