@@ -34,7 +34,7 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteCountry([FromRoute] int id)
+    public async Task<IActionResult> DeleteCountry(int id)
     {
         return HandleResponse(await CountryManager.DeleteCountry(id,Query,Command));
     }
@@ -46,13 +46,13 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<Country>> UpdateCountry([FromRoute] int id,[FromBody] CountryDto data)
+    public async Task<ActionResult<Country>> UpdateCountry(int id,[FromBody] CountryDto data)
     {
         return HandleResponse(await CountryManager.UpdateCountry(id,data,Query,Command,Mapper));
     }
 
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult<CountryDto>> UpdateCountryPartial([FromRoute] int id, [FromBody] JsonPatchDocument data)
+    public async Task<ActionResult<CountryDto>> UpdateCountryPartial(int id, [FromBody] JsonPatchDocument data)
     {
         return HandleResponse(await CountryManager.UpdateCountryPartial(id,data,Query,Command,Mapper));
     }
