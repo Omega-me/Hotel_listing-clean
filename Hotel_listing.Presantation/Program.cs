@@ -18,7 +18,7 @@ try
     builder.Services.ConfigureDbContext(builder.Configuration);
     builder.Services.ConfigureSwagger();
     builder.Services.AddAutoMapper(typeof(MapperConfig));
-    // builder.Services.ConfigureApiBehavior();
+    builder.Services.ConfigureApiBehavior();
     #endregion
 
     var app = builder.Build();

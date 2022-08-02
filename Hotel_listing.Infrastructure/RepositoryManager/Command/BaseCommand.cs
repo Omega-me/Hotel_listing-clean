@@ -1,10 +1,10 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Command;
-
-public class BaseCommand<T>:IBaseCommand<T> where T:class
+public class BaseCommand<T>: IBaseCommand<T> where T:class
 {
     private readonly DatabaseContext _context;
     private readonly DbSet<T> _db;
@@ -23,7 +23,10 @@ public class BaseCommand<T>:IBaseCommand<T> where T:class
         _db.Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
     }
-    
+    public void UpdatePartial(T entity,JsonPatchDocument data) {
+        data.ApplyTo(entity);
+        _context.Entry(entity).State = EntityState.Modified;
+    }
     public async Task Delete(int id)
     {
         var entity =await _db.FindAsync(id);

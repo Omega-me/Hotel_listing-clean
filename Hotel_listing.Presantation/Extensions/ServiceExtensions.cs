@@ -47,7 +47,7 @@ public static class ServiceExtensions
     {
         serviceCollection.AddControllers(o =>
             {
-                // o.Filters.Add(typeof(ModelStateFilter));
+                o.Filters.Add(typeof(ModelStateFilter));
             })
             .AddFluentValidation(v =>
             {

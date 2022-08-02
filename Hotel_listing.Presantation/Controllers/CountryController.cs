@@ -4,6 +4,7 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Presantation.Managers;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_listing.Presantation.Controllers;
@@ -27,8 +28,32 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpPost]
-    public async Task<ActionResult<Country>> CreateCountry([FromBody] CreateCountryDTO data)
+    public async Task<ActionResult<Country>> CreateCountry([FromBody] CreateCountryDto data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteCountry([FromRoute] int id)
+    {
+        return HandleResponse(await CountryManager.DeleteCountry(id,Query,Command));
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteCountries([FromBody]List<int> ids)
+    {
+        return HandleResponse(await CountryManager.DeleteCountries(ids,Query,Command));
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<Country>> UpdateCountry([FromRoute] int id,[FromBody] CountryDto data)
+    {
+        return HandleResponse(await CountryManager.UpdateCountry(id,data,Query,Command,Mapper));
+    }
+
+    [HttpPatch("{id:int}")]
+    public async Task<ActionResult<CountryDto>> UpdateCountryPartial([FromRoute] int id, [FromBody] JsonPatchDocument data)
+    {
+        return HandleResponse(await CountryManager.UpdateCountryPartial(id,data,Query,Command,Mapper));
     }
 }

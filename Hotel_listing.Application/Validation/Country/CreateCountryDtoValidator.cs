@@ -3,9 +3,9 @@ using Hotel_listing.Application.DTO.Country;
 
 namespace Hotel_listing.Application.Validation.Country;
 
-public class CountryValidator:AbstractValidator<CreateCountryDTO>
+public class CreateCountryDtoValidator:AbstractValidator<CreateCountryDto>
 {
-    public CountryValidator()
+    public CreateCountryDtoValidator()
     {
         RuleFor(c => c.Name)
             .Cascade(CascadeMode.StopOnFirstFailure)
