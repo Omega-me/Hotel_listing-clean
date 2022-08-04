@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using Hotel_listing.Application.Configurations;
+using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.Validation;

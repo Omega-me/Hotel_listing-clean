@@ -17,24 +17,27 @@ public static class CountryManager
         return new CountryResponse().BuildCountryResult(r =>
         {
             r.Token = "1A8E9C32-E49B-49DD-9483-19D44A05B87A";
-            r.Data = countries;
+            r.Results = countries;
             r.StatusCode = StatusCodes.Status200OK;
             r.Success = true;
-            r.Results = countries.Count;
+            r.Count = countries.Count;
         });
     }
     public static async Task<BaseResponse<object, object>> GetCountry(int id, IQuery query)
     {
-        Country country = await query.Countries.Get(c => c.CountryId == id);
+        Country country = await query.Countries.Get(c => c.CountryId == id,new List<string>{"Hotels"});
         if (country == null)
         {
             return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
             {
                 r.Success = false;
                 r.StatusCode = StatusCodes.Status404NotFound;
-                r.Errors = new List<string>
-                {
-                    "The Country you are looking for does not exists."
+                r.Errors = new List<BaseError>
+                {   
+                    new BaseError()
+                    {
+                        ErrorMessage = "The Country you are looking for does not exists."
+                    }
                 };
             });
             
@@ -42,10 +45,10 @@ public static class CountryManager
         
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
-            r.Data = country;
+            r.Results = country;
             r.Success = true;
             r.StatusCode = StatusCodes.Status200OK;
-            r.Results = 1;
+            r.Count = 1;
         });
     }
     public static async Task<BaseResponse<object, object>> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
@@ -55,7 +58,7 @@ public static class CountryManager
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
         {
-            r.Data = data;
+            r.Results = data;
             r.StatusCode = StatusCodes.Status201Created;
         });
     }
@@ -68,9 +71,12 @@ public static class CountryManager
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
-                r.Errors = new List<string>
-                {
-                    "No country found with that id to delete."
+                r.Errors = new List<BaseError>
+                {   
+                    new BaseError()
+                    {
+                        ErrorMessage = "The Country you are looking for does not exists."
+                    }
                 };
             });
         }
@@ -95,9 +101,12 @@ public static class CountryManager
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
-                r.Errors = new List<string>
-                {
-                    "No country found with that list of ids to delete."
+                r.Errors = new List<BaseError>
+                {   
+                    new BaseError()
+                    {
+                        ErrorMessage = "The Country you are looking for does not exists."
+                    }
                 };
             });
         }
@@ -116,9 +125,12 @@ public static class CountryManager
             {
                 r.StatusCode = StatusCodes.Status400BadRequest;
                 r.Success = false;
-                r.Errors = new List<string>
-                {
-                    "Provided Id in the url does not match the body Id."
+                r.Errors = new List<BaseError>
+                {   
+                    new BaseError()
+                    {
+                        ErrorMessage = "The Country you are looking for does not exists."
+                    }
                 };
             });
         }
@@ -129,9 +141,12 @@ public static class CountryManager
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
-                r.Errors = new List<string>()
-                {
-                    "No Country with tht Id was found."
+                r.Errors = new List<BaseError>
+                {   
+                    new BaseError()
+                    {
+                        ErrorMessage = "The Country you are looking for does not exists."
+                    }
                 };
             });
         }
@@ -140,7 +155,7 @@ public static class CountryManager
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
-            r.Data = country;
+            r.Results = country;
             r.StatusCode = StatusCodes.Status200OK;
             r.Success = true;
         });
@@ -155,9 +170,12 @@ public static class CountryManager
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
-                r.Errors = new List<string>()
-                {
-                    "No Country with tht Id was found."
+                r.Errors = new List<BaseError>
+                {   
+                    new BaseError()
+                    {
+                        ErrorMessage = "The Country you are looking for does not exists."
+                    }
                 };
             });
         }
@@ -165,7 +183,7 @@ public static class CountryManager
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
-            r.Data = country;
+            r.Results = country;
             r.StatusCode = StatusCodes.Status200OK;
             r.Success = true;
         });
