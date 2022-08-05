@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hotel_listing.Application.Configurations.Response;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Hotel_listing.Application.Configurations.Response;
+namespace Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 
-//this filter is used for returning the desired reponse when having validation errors form Fluent validator
-public class ModelStateFilter:ActionFilterAttribute
+public class BaseModelStateFilter:ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
     {

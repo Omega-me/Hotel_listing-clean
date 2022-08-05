@@ -1,9 +1,8 @@
 ﻿using FluentValidation.AspNetCore;
 using Hotel_listing.Application.Configurations;
-using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
-using Hotel_listing.Application.Validation;
+using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Hotel_listing.Infrastructure.RepositoryManager.Command;
 using Hotel_listing.Infrastructure.RepositoryManager.Query;
@@ -48,7 +47,7 @@ public static class ServiceExtensions
     {
         serviceCollection.AddControllers(o =>
             {
-                o.Filters.Add(typeof(ModelStateFilter));
+                o.Filters.Add(typeof(BaseModelStateFilter));
             })
             .AddFluentValidation(v =>
             {
