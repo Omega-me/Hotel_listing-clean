@@ -14,21 +14,20 @@ public static class CountryManager
     public static async Task<CountryResponse> GetCountries(IQuery query)
     {
         IList<Country> countries =await query.Countries.GetAll(null,null,new List<string>{"Hotels"});
-        return new CountryResponse().BuildCountryResult(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
-            r.Token = "1A8E9C32-E49B-49DD-9483-19D44A05B87A";
             r.Results = countries;
             r.StatusCode = StatusCodes.Status200OK;
             r.Success = true;
             r.Count = countries.Count;
         });
     }
-    public static async Task<BaseResponse<object, object>> GetCountry(int id, IQuery query)
+    public static async Task<CountryResponse> GetCountry(int id, IQuery query)
     {
         Country country = await query.Countries.Get(c => c.CountryId == id,new List<string>{"Hotels"});
         if (country == null)
         {
-            return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+            return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
                 r.Success = false;
                 r.StatusCode = StatusCodes.Status404NotFound;
@@ -43,7 +42,7 @@ public static class CountryManager
             
         }
         
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.Results = country;
             r.Success = true;
@@ -51,23 +50,23 @@ public static class CountryManager
             r.Count = 1;
         });
     }
-    public static async Task<BaseResponse<object, object>> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
+    public static async Task<CountryResponse> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
     {
         Country country = mapper.Map<Country>(data);
         await command.Countries.Insert(country);
         await command.Save();
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.Results = data;
             r.StatusCode = StatusCodes.Status201Created;
         });
     }
-    public static async Task<BaseResponse<object, object>> DeleteCountry(int id,IQuery query,ICommands command)
+    public static async Task<CountryResponse> DeleteCountry(int id,IQuery query,ICommands command)
     {
         Country country = await query.Countries.Get(c => c.CountryId == id);
         if (country == null)
         {
-            return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+            return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
@@ -82,13 +81,13 @@ public static class CountryManager
         }
         await command.Countries.Delete(id);
         await command.Save();
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.StatusCode = StatusCodes.Status204NoContent;
         });
     }
     //TODO
-    public static async Task<BaseResponse<object, object>> DeleteCountries(List<int> ids,IQuery query, ICommands command)
+    public static async Task<CountryResponse> DeleteCountries(List<int> ids,IQuery query, ICommands command)
     {
         IEnumerable<Country> countries = Array.Empty<Country>();
         foreach (var id in ids)
@@ -97,7 +96,7 @@ public static class CountryManager
         }
         if (countries.ToList().Count == 0)
         {
-            return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+            return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
@@ -112,16 +111,16 @@ public static class CountryManager
         }
         command.Countries.DeleteRange(countries);
         await command.Save();
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.StatusCode = StatusCodes.Status204NoContent;
         });
     }
-    public static async Task<BaseResponse<object, object>> UpdateCountry(int id, CountryDto data, IQuery query, ICommands command, IMapper mapper)
+    public static async Task<CountryResponse> UpdateCountry(int id, CountryDto data, IQuery query, ICommands command, IMapper mapper)
     {
         if (id != data.CountryId)
         {
-            return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
+            return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
                 r.StatusCode = StatusCodes.Status400BadRequest;
                 r.Success = false;
@@ -137,7 +136,7 @@ public static class CountryManager
         Country country = await query.Countries.Get(c => c.CountryId == id);
         if (country == null)
         {
-            return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
+            return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
@@ -153,20 +152,20 @@ public static class CountryManager
         mapper.Map(data, country);
         command.Countries.Update(country);
         await command.Save();
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.Results = country;
             r.StatusCode = StatusCodes.Status200OK;
             r.Success = true;
         });
     }
-    public static async Task<BaseResponse<object, object>> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
+    public static async Task<CountryResponse> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
     {
         var test = data.Operations;
         Country country = await query.Countries.Get(c => c.CountryId == id);
         if (country == null)
         {
-            return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
+            return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
                 r.StatusCode = StatusCodes.Status404NotFound;
                 r.Success = false;
@@ -181,7 +180,7 @@ public static class CountryManager
         }
         command.Countries.UpdatePartial(country,data);
         await command.Save();
-        return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
+        return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.Results = country;
             r.StatusCode = StatusCodes.Status200OK;

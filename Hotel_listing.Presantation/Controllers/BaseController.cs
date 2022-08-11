@@ -56,10 +56,6 @@ public class BaseController<T>:ControllerBase where T:class
     }
     protected virtual ActionResult HandleResponse(CountryResponse response)
     {
-        if (response.Token == "null")
-        {
-            return BadRequest(response);
-        }
         return ResponseBuilder(response);
     }
     #endregion
