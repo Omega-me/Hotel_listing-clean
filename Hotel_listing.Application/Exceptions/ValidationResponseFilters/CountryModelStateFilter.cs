@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 
-public class BaseModelStateFilter:ActionFilterAttribute
+public class CountryModelStateFilter : ResultFilterAttribute
 {
-    public override void OnActionExecuting(ActionExecutingContext context)
+    public override void OnResultExecuting(ResultExecutingContext context)
     {
         if (!context.ModelState.IsValid)
         {
@@ -16,8 +16,9 @@ public class BaseModelStateFilter:ActionFilterAttribute
                 .Select(v => new BaseError{ ErrorMessage = v.ErrorMessage})
                 .ToList();
 
-            var response = new BaseResponse<object, object>()
+            var response = new CountryResponse()
             {
+                Token = null,
                 Results = null,
                 Success = false,
                 Errors = errors,
@@ -30,7 +31,6 @@ public class BaseModelStateFilter:ActionFilterAttribute
                 StatusCode = 400
             };
         }
-        base.OnActionExecuting(context);
+        base.OnResultExecuting(context);
     }
 }
-

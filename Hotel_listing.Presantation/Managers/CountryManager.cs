@@ -7,7 +7,6 @@ using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace Hotel_listing.Presantation.Managers;
-
 public static class CountryManager
 {
     #region Managers and response builders

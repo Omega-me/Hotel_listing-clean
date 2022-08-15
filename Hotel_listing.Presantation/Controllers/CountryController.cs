@@ -2,6 +2,7 @@
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
+using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Presantation.Managers;
 using Microsoft.AspNetCore.JsonPatch;
@@ -9,11 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_listing.Presantation.Controllers;
 
+[CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
     public CountryController(IQuery query, ICommands command,IMapper mapper) 
         : base(query,command,mapper)
     { }
+    
 
     [HttpGet]
     public async Task<ActionResult<List<Country>>> GetCountries()
@@ -28,6 +31,7 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpPost]
+    [CountryModelStateFilter]
     public async Task<ActionResult<Country>> CreateCountry([FromBody] CreateCountryDto data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
