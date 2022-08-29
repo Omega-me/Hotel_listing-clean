@@ -10,7 +10,7 @@ namespace Hotel_listing.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "Country",
                 columns: table => new
                 {
                     CountryId = table.Column<int>(type: "integer", nullable: false)
@@ -20,11 +20,11 @@ namespace Hotel_listing.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.CountryId);
+                    table.PrimaryKey("PK_Country", x => x.CountryId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Hotels",
+                name: "Hotel",
                 columns: table => new
                 {
                     HotelId = table.Column<int>(type: "integer", nullable: false)
@@ -36,17 +36,17 @@ namespace Hotel_listing.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hotels", x => x.HotelId);
+                    table.PrimaryKey("PK_Hotel", x => x.HotelId);
                     table.ForeignKey(
-                        name: "FK_Hotels_Countries_CountryId",
+                        name: "FK_Hotel_Country_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Countries",
+                        principalTable: "Country",
                         principalColumn: "CountryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Countries",
+                table: "Country",
                 columns: new[] { "CountryId", "Name", "ShortName" },
                 values: new object[,]
                 {
@@ -57,7 +57,7 @@ namespace Hotel_listing.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Hotels",
+                table: "Hotel",
                 columns: new[] { "HotelId", "Adrsess", "CountryId", "Name", "Rating" },
                 values: new object[,]
                 {
@@ -68,18 +68,18 @@ namespace Hotel_listing.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hotels_CountryId",
-                table: "Hotels",
+                name: "IX_Hotel_CountryId",
+                table: "Hotel",
                 column: "CountryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Hotels");
+                name: "Hotel");
 
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "Country");
         }
     }
 }

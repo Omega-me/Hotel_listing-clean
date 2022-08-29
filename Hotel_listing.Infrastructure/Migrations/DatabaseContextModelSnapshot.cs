@@ -40,7 +40,7 @@ namespace Hotel_listing.Infrastructure.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Country");
 
                     b.HasData(
                         new
@@ -96,7 +96,7 @@ namespace Hotel_listing.Infrastructure.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Hotels");
+                    b.ToTable("Hotel");
 
                     b.HasData(
                         new

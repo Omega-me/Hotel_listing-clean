@@ -11,13 +11,15 @@ namespace Hotel_listing.Presantation.Controllers;
 
 public class CountryController:BaseController<Country>
 {
-    public CountryController(IQuery query, ICommands command,IMapper mapper) 
-        : base(query,command,mapper)
+    public CountryController(IQuery query, ICommands command,IMapper mapper,ILogger<Country> logger) 
+        : base(query,command,mapper,logger)
     { }
+
 
     [HttpGet]
     public async Task<ActionResult<List<Country>>> GetCountries()
     {
+        Logger.LogInformation(TestMethode("This is from test methode............................................."));
         return HandleResponse(await CountryManager.GetCountries(Query));
     }
         

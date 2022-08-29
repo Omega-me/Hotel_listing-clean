@@ -8,7 +8,7 @@ namespace Hotel_listing.Presantation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BaseController<T>:ControllerBase where T:class
+public partial class BaseController<T>:ControllerBase where T:class
 {
     protected readonly ICommands Command;
     protected readonly IQuery Query;
@@ -33,13 +33,13 @@ public class BaseController<T>:ControllerBase where T:class
             case StatusCodes.Status200OK:
                 return Ok(response); 
             case StatusCodes.Status201Created:
-                return Created("",response.Data); 
+                return Created("",response.Results); 
             case StatusCodes.Status204NoContent:
                 return NoContent(); 
             case StatusCodes.Status400BadRequest:
                 return BadRequest(response);
             case StatusCodes.Status401Unauthorized:
-                return Unauthorized(response.Errors);
+                return Unauthorized(response);
             case StatusCodes.Status403Forbidden:
                 return Forbid(response);
             case StatusCodes.Status404NotFound:

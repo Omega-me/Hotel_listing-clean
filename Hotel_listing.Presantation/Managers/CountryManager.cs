@@ -13,7 +13,7 @@ public static class CountryManager
     #region Managers and response builders
     public static async Task<CountryResponse> GetCountries(IQuery query)
     {
-        IList<Country> countries =await query.Countries.GetAll(null,null,new List<string>{"Hotels"});
+        IList<Country> countries =await query.Country.GetAll(null,null,new List<string>{"Hotels"});
         return new CountryResponse().BuildCountryResult(r =>
         {
             r.Token = "1A8E9C32-E49B-49DD-9483-19D44A05B87A";
@@ -25,7 +25,7 @@ public static class CountryManager
     }
     public static async Task<BaseResponse<object, object>> GetCountry(int id, IQuery query)
     {
-        Country country = await query.Countries.Get(c => c.CountryId == id,new List<string>{"Hotels"});
+        Country country = await query.Country.Get(c => c.CountryId == id,new List<string>{"Hotels"});
         if (country == null)
         {
             return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
@@ -54,7 +54,7 @@ public static class CountryManager
     public static async Task<BaseResponse<object, object>> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
     {
         Country country = mapper.Map<Country>(data);
-        await command.Countries.Insert(country);
+        await command.Country.Insert(country);
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
         {
@@ -64,7 +64,7 @@ public static class CountryManager
     }
     public static async Task<BaseResponse<object, object>> DeleteCountry(int id,IQuery query,ICommands command)
     {
-        Country country = await query.Countries.Get(c => c.CountryId == id);
+        Country country = await query.Country.Get(c => c.CountryId == id);
         if (country == null)
         {
             return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
@@ -80,7 +80,7 @@ public static class CountryManager
                 };
             });
         }
-        await command.Countries.Delete(id);
+        await command.Country.Delete(id);
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
@@ -93,7 +93,7 @@ public static class CountryManager
         IEnumerable<Country> countries = Array.Empty<Country>();
         foreach (var id in ids)
         {
-            countries.ToList().Add(await query.Countries.Get(c=>c.CountryId==id));
+            countries.ToList().Add(await query.Country.Get(c=>c.CountryId==id));
         }
         if (countries.ToList().Count == 0)
         {
@@ -110,7 +110,7 @@ public static class CountryManager
                 };
             });
         }
-        command.Countries.DeleteRange(countries);
+        command.Country.DeleteRange(countries);
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
@@ -134,7 +134,7 @@ public static class CountryManager
                 };
             });
         }
-        Country country = await query.Countries.Get(c => c.CountryId == id);
+        Country country = await query.Country.Get(c => c.CountryId == id);
         if (country == null)
         {
             return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
@@ -151,7 +151,7 @@ public static class CountryManager
             });
         }
         mapper.Map(data, country);
-        command.Countries.Update(country);
+        command.Country.Update(country);
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
@@ -162,8 +162,7 @@ public static class CountryManager
     }
     public static async Task<BaseResponse<object, object>> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
     {
-        var test = data.Operations;
-        Country country = await query.Countries.Get(c => c.CountryId == id);
+        Country country = await query.Country.Get(c => c.CountryId == id);
         if (country == null)
         {
             return new BaseResponse<object, object>().BuildResult<BaseResponse<object, object>>(r =>
@@ -179,7 +178,7 @@ public static class CountryManager
                 };
             });
         }
-        command.Countries.UpdatePartial(country,data);
+        command.Country.UpdatePartial(country,data);
         await command.Save();
         return new BaseResponse<object, object>().BuildResult<BaseResponse<object,object>>(r =>
         {
