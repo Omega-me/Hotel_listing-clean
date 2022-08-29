@@ -40,7 +40,11 @@ public static class ServiceExtensions
     {
         serviceCollection.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo {Title = "Hotel Listing", Version = "v1"});
+            c.SwaggerDoc("v1", new OpenApiInfo {Title = "Hotel Listing", Version = "v1",Contact = new OpenApiContact()
+            {
+                Name = "Olken",
+                Email = "olkenmerxira@gmail.com"
+            }});
         });
     }
     public static void ConfigureControllers(this IServiceCollection serviceCollection)
