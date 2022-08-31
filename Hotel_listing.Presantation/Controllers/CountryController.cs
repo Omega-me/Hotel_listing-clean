@@ -16,13 +16,11 @@ public class CountryController:BaseController<Country>
     public CountryController(IQuery query, ICommands command,IMapper mapper,ILogger<Country> logger) 
         : base(query,command,mapper,logger)
     { }
-    
-
 
     [HttpGet]
     public async Task<ActionResult<List<Country>>> GetCountries()
     {
-        Logger.LogInformation(TestMethode("This is from test methode............................................."));
+        Logger.LogInformation(TestMethode($"This is from test methode"));
         return HandleResponse(await CountryManager.GetCountries(Query));
     }
         
@@ -33,7 +31,6 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpPost]
-    [CountryModelStateFilter]
     public async Task<ActionResult<Country>> CreateCountry([FromBody] CreateCountryDto data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));

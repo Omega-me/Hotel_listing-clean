@@ -1,5 +1,7 @@
 using Hotel_listing.Application.Configurations;
+using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Hotel_listing.Presantation.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration().CreateLogger();
@@ -22,6 +24,21 @@ try
     #endregion
 
     var app = builder.Build();
+
+    #region Database migration
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<DatabaseContext>();
+        dbContext.Database.Migrate();
+    }
+    catch (Exception e)
+    {
+        var logger = services.GetRequiredService<Logger<Program>>();
+        logger.LogError(e,"An error accured during migrations");
+    }
+    #endregion
 
     #region HTTP request pipeline (Middlewares)
     if (app.Environment.IsDevelopment())
