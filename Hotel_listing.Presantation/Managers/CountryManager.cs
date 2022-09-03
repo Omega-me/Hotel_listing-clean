@@ -24,7 +24,7 @@ public static class CountryManager
     }
     public static async Task<CountryResponse> GetCountry(int id, IQuery query)
     {
-        Country country = await query.Country.Get(c => c.CountryId == id,new List<string>{"Hotels"});
+        Country country = await query.Country.Get(c => c.Id == id,new List<string>{"Hotels"});
         if (country == null)
         {
             return new CountryResponse().BuildResult<CountryResponse>(r =>
@@ -63,7 +63,7 @@ public static class CountryManager
     }
     public static async Task<CountryResponse> DeleteCountry(int id,IQuery query,ICommands command)
     {
-        Country country = await query.Country.Get(c => c.CountryId == id);
+        Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
         {
             return new CountryResponse().BuildResult<CountryResponse>(r =>
@@ -92,7 +92,7 @@ public static class CountryManager
         IEnumerable<Country> countries = Array.Empty<Country>();
         foreach (var id in ids)
         {
-            countries.ToList().Add(await query.Country.Get(c=>c.CountryId==id));
+            countries.ToList().Add(await query.Country.Get(c=>c.Id==id));
         }
         if (countries.ToList().Count == 0)
         {
@@ -118,7 +118,7 @@ public static class CountryManager
     }
     public static async Task<CountryResponse> UpdateCountry(int id, CountryDto data, IQuery query, ICommands command, IMapper mapper)
     {
-        if (id != data.CountryId)
+        if (id != data.Id)
         {
             return new CountryResponse().BuildResult<CountryResponse>(r =>
             {
@@ -133,7 +133,7 @@ public static class CountryManager
                 };
             });
         }
-        Country country = await query.Country.Get(c => c.CountryId == id);
+        Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
         {
             return new CountryResponse().BuildResult<CountryResponse>(r =>
@@ -161,7 +161,7 @@ public static class CountryManager
     }
     public static async Task<CountryResponse> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
     {
-        Country country = await query.Country.Get(c => c.CountryId == id);
+        Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
         {
             return new CountryResponse().BuildResult<CountryResponse>(r =>

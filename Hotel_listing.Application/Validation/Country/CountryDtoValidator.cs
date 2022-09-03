@@ -16,7 +16,7 @@ public class CountryDtoValidator : AbstractValidator<CountryDto>
             .NotEmpty()
             .Length(2,2)
             .NotNull();
-        RuleFor(c=>c.CountryId)
+        RuleFor(c=>c.Id)
             .Cascade(CascadeMode.StopOnFirstFailure)
             .NotEmpty()
             .NotNull();

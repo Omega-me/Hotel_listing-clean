@@ -35,8 +35,7 @@ try
     }
     catch (Exception e)
     {
-        var logger = services.GetRequiredService<Logger<Program>>();
-        logger.LogError(e,"An error accured during migrations");
+        Log.Fatal(e,"An error accured during migrations");
     }
     #endregion
 
@@ -53,9 +52,9 @@ try
     app.Run();
     #endregion
 }
-catch (Exception ex)
+catch (Exception e)
 {
-    Log.Fatal(ex, "Application stopped working");
+    Log.Fatal(e, "Application stopped working");
 }
 finally
 {

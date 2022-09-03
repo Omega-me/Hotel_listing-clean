@@ -25,13 +25,13 @@ public class CountryController:BaseController<Country>
     }
         
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Country>> GetCountry(int id)
+    public async Task<ActionResult<CountryDto>> GetCountry(int id)
     {
         return HandleResponse(await CountryManager.GetCountry(id, Query));
     }
 
     [HttpPost]
-    public async Task<ActionResult<Country>> CreateCountry([FromBody] CreateCountryDto data)
+    public async Task<ActionResult<CountryDto>> CreateCountry([FromBody] CreateCountryDto data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
     }
@@ -49,7 +49,7 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<Country>> UpdateCountry(int id,[FromBody] CountryDto data)
+    public async Task<ActionResult<CountryDto>> UpdateCountry(int id,[FromBody] CountryDto data)
     {
         return HandleResponse(await CountryManager.UpdateCountry(id,data,Query,Command,Mapper));
     }

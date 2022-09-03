@@ -11,7 +11,7 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
         builder.HasData(
             new Hotel
             {
-                HotelId = 1,
+                Id = 1,
                 Name = "Hotel 1",
                 Adrsess = "Hotel 1 street",
                 Rating = 4.8,
@@ -19,7 +19,7 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             },
             new Hotel
             {
-                HotelId = 2,
+                Id = 2,
                 Name = "Hotel 2",
                 Adrsess = "Hotel 2 street",
                 Rating = 4.8,
@@ -27,7 +27,7 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             },
             new Hotel
             {
-                HotelId = 3,
+                Id = 3,
                 Name = "Hotel 3",
                 Adrsess = "Hotel 3 street",
                 Rating = 4.8,
@@ -35,7 +35,7 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             },
             new Hotel
             {
-                HotelId = 4,
+                Id = 4,
                 Name = "Hotel 4",
                 Adrsess = "Hotel 4 street",
                 Rating = 4.8,

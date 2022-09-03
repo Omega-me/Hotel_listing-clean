@@ -11,25 +11,25 @@ public class CountryConfiguration :IEntityTypeConfiguration<Country>
         builder.HasData(
             new Country 
             {
-                CountryId = 1,
+                Id = 1,
                 Name = "Albania",
                 ShortName = "AL"
             },
             new Country
             {
-                CountryId = 2, 
+                Id = 2, 
                 Name = "Germany", 
                 ShortName = "DU"
             },
             new Country 
             {
-                CountryId = 3, 
+                Id = 3, 
                 Name = "Italy", 
                 ShortName = "IT"
             }, 
             new Country 
             {
-                CountryId = 4, 
+                Id = 4, 
                 Name = "England", 
                 ShortName = "EN"
             }
