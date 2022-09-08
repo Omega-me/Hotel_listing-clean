@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Application.Contracts.RepositoryManager.Options;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
@@ -12,9 +13,11 @@ public static class CountryManager
     #region Managers and response builders
     public static async Task<CountryResponse> GetCountries(IQuery query)
     {
-        IList<Country> countries =await query.Country.GetAll(null,null,new List<string>{"Hotels"});
+        IList<Country> countries =await query.Country.GetAll(new QueryOptions<Country>()
+        {
+            Includes = new List<string>{"Hotels"},
+        });
         return new CountryResponse().BuildResult<CountryResponse>(r =>
-
         {
             r.Results = countries;
             r.StatusCode = StatusCodes.Status200OK;
@@ -22,6 +25,7 @@ public static class CountryManager
             r.Count = countries.Count;
         });
     }
+    
     public static async Task<CountryResponse> GetCountry(int id, IQuery query)
     {
         Country country = await query.Country.Get(c => c.Id == id,new List<string>{"Hotels"});

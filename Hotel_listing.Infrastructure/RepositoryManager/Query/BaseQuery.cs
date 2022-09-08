@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Hotel_listing.Application.Contracts.RepositoryManager.Options;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Microsoft.EntityFrameworkCore;
@@ -16,27 +17,30 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         _context = context;
         _db = _context.Set<T>();
     }
-
-    public async Task<List<T>> GetAll(Expression<Func<T, bool>>? expression = null,
-        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, List<string>? includes = null)
+    public async Task<List<T>> GetAll(QueryOptions<T> options)
     {
         IQueryable<T> query = _db;
-        if (expression != null)
+        if (options.Expression != null)
         {
-            query = query.Where(expression);
+            query = query.Where(options.Expression);
         }
 
-        if (includes != null)
+        if (options.Includes != null)
         {
-            foreach (var includeProperty in includes)
+            foreach (var includeProperty in options.Includes)
             {
                 query = query.Include(includeProperty);
             }
         }
 
-        if (orderBy != null)
+        if (options.OrderBy != null)
         {
-            query = orderBy(query);
+            query = options.OrderBy(query);
+        }
+        
+        if (options.Pagination != null)
+        {
+            query = query.Skip(10 * (options.Pagination.PageNumber - 1)).Take(options.Pagination.PageSize);
         }
 
         return await query.AsNoTracking().ToListAsync();
