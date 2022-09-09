@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Application.Contracts.RepositoryManager.Options;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
@@ -18,10 +19,18 @@ public class CountryController:BaseController<Country>
     { }
 
     [HttpGet]
-    public async Task<ActionResult<List<Country>>> GetCountries()
+    public async Task<ActionResult<List<Country>>> GetCountries([FromQuery] int _size=10, int _page=1, int _max=50)
     {
-        Logger.LogInformation(TestMethode($"This is from test methode"));
-        return HandleResponse(await CountryManager.GetCountries(Query));
+        // Logger.LogInformation(TestMethode("Test"));
+        return HandleResponse(await CountryManager.GetCountries(Query,new QueryOptions<Country>()
+        {
+            Pagination = new PaginationOptions()
+            {
+                PageNumber = _page,
+                PageSize = _size,
+                MaxPageSize = _max
+            }
+        }));
     }
         
     [HttpGet("{id:int}")]

@@ -11,17 +11,22 @@ namespace Hotel_listing.Presantation.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse> GetCountries(IQuery query)
+    public static async Task<CountryResponse> GetCountries(IQuery query,QueryOptions<Country> queryOptions)
     {
         IList<Country> countries =await query.Country.GetAll(new QueryOptions<Country>()
         {
             Includes = new List<string>{"Hotels"},
+            Pagination = queryOptions.Pagination,
+            OrderBy = o=>o.OrderBy(country=>country.Id)
         });
         return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
             r.Results = countries;
             r.StatusCode = StatusCodes.Status200OK;
             r.Success = true;
+            r.PageSize = queryOptions.Pagination.PageSize;
+            r.PageNumber = queryOptions.Pagination.PageNumber;
+            r.MaxPageSize = queryOptions.Pagination.MaxPageSize;
             r.Count = countries.Count;
         });
     }
@@ -51,7 +56,6 @@ public static class CountryManager
             r.Results = country;
             r.Success = true;
             r.StatusCode = StatusCodes.Status200OK;
-            r.Count = 1;
         });
     }
     public static async Task<CountryResponse> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)

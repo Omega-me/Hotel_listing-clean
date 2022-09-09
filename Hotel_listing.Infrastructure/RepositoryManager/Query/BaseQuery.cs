@@ -9,7 +9,6 @@ namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 public class BaseQuery<T> : IBaseQuery<T> where T : class
 {
     private readonly DatabaseContext _context;
-
     private readonly DbSet<T> _db;
 
     public BaseQuery(DatabaseContext context)
@@ -40,7 +39,10 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         
         if (options.Pagination != null)
         {
-            query = query.Skip(10 * (options.Pagination.PageNumber - 1)).Take(options.Pagination.PageSize);
+            var number = options.Pagination.PageNumber;
+            var size = options.Pagination.PageSize;
+            var skip = (number - 1) * size;
+            query = query.Skip(skip).Take(size);
         }
 
         return await query.AsNoTracking().ToListAsync();

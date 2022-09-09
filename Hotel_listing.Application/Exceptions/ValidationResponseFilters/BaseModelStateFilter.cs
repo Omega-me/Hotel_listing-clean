@@ -22,7 +22,9 @@ public class BaseModelStateFilter:ActionFilterAttribute
                 Success = false,
                 Errors = errors,
                 StatusCode = StatusCodes.Status400BadRequest,
-                Count = 0
+                PageNumber = null,
+                PageSize = null,
+                Count = null
             };
             
             context.Result = new JsonResult(response)
