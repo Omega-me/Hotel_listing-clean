@@ -1,4 +1,5 @@
 ﻿using Hotel_listing.Application.Configurations.Response;
+using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -16,7 +17,7 @@ public class CountryModelStateFilter : ResultFilterAttribute
                 .Select(v => new BaseError{ ErrorMessage = v.ErrorMessage})
                 .ToList();
 
-            var response = new CountryResponse()
+            var response = new CountryResponse<Country>()
             {
                 Token = null,
                 Results = null,

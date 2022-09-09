@@ -3,6 +3,8 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Options;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
+using Serilog;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 
@@ -19,24 +21,34 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
     public async Task<List<T>> GetAll(QueryParams<T> options)
     {
         IQueryable<T> query = _db;
+        
+        //Prevent parameter pollution
+        
+        //Add expressions
         if (options.Expression != null)
         {
             query = query.Where(options.Expression);
         }
 
+        //Include relations
         if (options.Includes != null)
         {
-            foreach (var includeProperty in options.Includes)
+            string[] includeArray = options.Includes.Split(",").ToArray();
+            foreach (var includeProperty in includeArray)
             {
                 query = query.Include(includeProperty);
             }
         }
 
-        if (options.OrderBy != null)
+        //Add sorting
+        if (options.Sort != null)
         {
-            query = options.OrderBy(query);
+            query = query.OrderBy(options.Sort);
         }
         
+        //Add filter
+        
+        //Add pagination
         if (options.Pagination != null)
         {
             var number = options.Pagination.PageNumber;
@@ -44,6 +56,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
             var skip = (number - 1) * size;
             query = query.Skip(skip).Take(size);
         }
+        
 
         return await query.AsNoTracking().ToListAsync();
     }

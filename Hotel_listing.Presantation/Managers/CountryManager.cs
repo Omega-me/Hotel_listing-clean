@@ -11,90 +11,90 @@ namespace Hotel_listing.Presantation.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse> GetCountries(IQuery query,QueryParams<Country> queryOptions)
+    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,QueryParams<Country>? queryOptions)
     {
-        IList<Country> countries =await query.Country.GetAll(new QueryParams<Country>()
+        var countries =await query.Country.GetAll(new QueryParams<Country>()
         {
-            Includes = new List<string>{"Hotels"},
+            Includes = queryOptions.Includes,
             Pagination = queryOptions.Pagination,
+            Sort = queryOptions.Sort,
         });
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        
+        return new CountryResponse<List<Country>>
         {
-            r.Results = countries;
-            r.StatusCode = StatusCodes.Status200OK;
-            r.Success = true;
-            r.PageSize = queryOptions.Pagination.PageSize;
-            r.PageNumber = queryOptions.Pagination.PageNumber;
-            r.MaxPageSize = queryOptions.Pagination.MaxPageSize;
-            r.Count = countries.Count;
-        });
+            StatusCode = StatusCodes.Status200OK,
+            Results = countries,
+            PageSize = queryOptions.Pagination.PageSize,
+            Success = true,
+            Count = countries.Count,
+            PageNumber = queryOptions.Pagination.PageNumber,
+            MaxPageSize = queryOptions.Pagination.MaxPageSize,
+        };
     }
-    
-    public static async Task<CountryResponse> GetCountry(int id, IQuery query)
+    public static async Task<CountryResponse<Country>> GetCountry(int id, IQuery query)
     {
         Country country = await query.Country.Get(c => c.Id == id,new List<string>{"Hotels"});
         if (country == null)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse<Country>
             {
-                r.Success = false;
-                r.StatusCode = StatusCodes.Status404NotFound;
-                r.Errors = new List<BaseError>
+                Success = false,
+                StatusCode = StatusCodes.Status404NotFound,
+                Errors = new List<BaseError>
                 {   
                     new BaseError()
                     {
                         ErrorMessage = "The Country you are looking for does not exists."
                     }
-                };
-            });
-            
+                },
+            };
         }
-        
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+
+        return new CountryResponse<Country>
         {
-            r.Results = country;
-            r.Success = true;
-            r.StatusCode = StatusCodes.Status200OK;
-        });
+            Results = country,
+            Success = true,
+            StatusCode = StatusCodes.Status200OK,
+        };
     }
-    public static async Task<CountryResponse> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
+    public static async Task<CountryResponse<Country>> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
     {
         Country country = mapper.Map<Country>(data);
         await command.Country.Insert(country);
         await command.Save();
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        return new CountryResponse<Country>()
         {
-            r.Results = data;
-            r.StatusCode = StatusCodes.Status201Created;
-        });
+            Results = country,
+            StatusCode = StatusCodes.Status201Created
+        };
     }
-    public static async Task<CountryResponse> DeleteCountry(int id,IQuery query,ICommands command)
+    public static async Task<CountryResponse<Country>> DeleteCountry(int id,IQuery query,ICommands command)
     {
         Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse<Country>
             {
-                r.StatusCode = StatusCodes.Status404NotFound;
-                r.Success = false;
-                r.Errors = new List<BaseError>
+                StatusCode = StatusCodes.Status404NotFound,
+                Success = false,
+                Errors = new List<BaseError>
                 {   
                     new BaseError()
                     {
                         ErrorMessage = "The Country you are looking for does not exists."
-                    }
-                };
-            });
+                    },
+                },
+            };
         }
         await command.Country.Delete(id);
         await command.Save();
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        return new CountryResponse<Country>
         {
-            r.StatusCode = StatusCodes.Status204NoContent;
-        });
+            StatusCode = StatusCodes.Status204NoContent
+        };
     }
     //TODO
-    public static async Task<CountryResponse> DeleteCountries(List<int> ids,IQuery query, ICommands command)
+    public static async Task<CountryResponse<Country>> DeleteCountries(List<int> ids,IQuery query, ICommands command)
     {
         IEnumerable<Country> countries = Array.Empty<Country>();
         foreach (var id in ids)
@@ -103,95 +103,95 @@ public static class CountryManager
         }
         if (countries.ToList().Count == 0)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse<Country>
             {
-                r.StatusCode = StatusCodes.Status404NotFound;
-                r.Success = false;
-                r.Errors = new List<BaseError>
-                {   
+                StatusCode = StatusCodes.Status404NotFound,
+                Success = false,
+                Errors = new List<BaseError>
+                {
                     new BaseError()
                     {
                         ErrorMessage = "The Country you are looking for does not exists."
                     }
-                };
-            });
+                }
+            };
         }
         command.Country.DeleteRange(countries);
         await command.Save();
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        return new CountryResponse<Country>
         {
-            r.StatusCode = StatusCodes.Status204NoContent;
-        });
+            StatusCode = StatusCodes.Status204NoContent
+        };
     }
-    public static async Task<CountryResponse> UpdateCountry(int id, CountryDto data, IQuery query, ICommands command, IMapper mapper)
+    public static async Task<CountryResponse<Country>> UpdateCountry(int id, CountryDto data, IQuery query, ICommands command, IMapper mapper)
     {
         if (id != data.Id)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse<Country>
             {
-                r.StatusCode = StatusCodes.Status400BadRequest;
-                r.Success = false;
-                r.Errors = new List<BaseError>
+                StatusCode = StatusCodes.Status400BadRequest,
+                Success = false,
+                Errors = new List<BaseError>
                 {   
                     new BaseError()
                     {
                         ErrorMessage = "The Country you are looking for does not exists."
                     }
-                };
-            });
+                }
+            };
         }
         Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse<Country>
             {
-                r.StatusCode = StatusCodes.Status404NotFound;
-                r.Success = false;
-                r.Errors = new List<BaseError>
-                {   
+                StatusCode = StatusCodes.Status404NotFound,
+                Success = false,
+                Errors = new List<BaseError>
+                {
                     new BaseError()
                     {
                         ErrorMessage = "The Country you are looking for does not exists."
                     }
-                };
-            });
+                },
+            };
         }
         mapper.Map(data, country);
         command.Country.Update(country);
         await command.Save();
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        return new CountryResponse<Country>
         {
-            r.Results = country;
-            r.StatusCode = StatusCodes.Status200OK;
-            r.Success = true;
-        });
+            Results = country,
+            StatusCode = StatusCodes.Status200OK,
+            Success = true,
+        };
     }
-    public static async Task<CountryResponse> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
+    public static async Task<CountryResponse<Country>> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
     {
         Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
         {
-            return new CountryResponse().BuildResult<CountryResponse>(r =>
+            return new CountryResponse<Country>
             {
-                r.StatusCode = StatusCodes.Status404NotFound;
-                r.Success = false;
-                r.Errors = new List<BaseError>
-                {   
+                StatusCode = StatusCodes.Status404NotFound,
+                Success = false,
+                Errors = new List<BaseError>
+                {
                     new BaseError()
                     {
                         ErrorMessage = "The Country you are looking for does not exists."
                     }
-                };
-            });
+                },
+            };
         }
         command.Country.UpdatePartial(country,data);
         await command.Save();
-        return new CountryResponse().BuildResult<CountryResponse>(r =>
+        return new CountryResponse<Country>
         {
-            r.Results = country;
-            r.StatusCode = StatusCodes.Status200OK;
-            r.Success = true;
-        });
+            Results = country,
+            StatusCode = StatusCodes.Status200OK,
+            Success = true,
+        };
     }
     #endregion
 }

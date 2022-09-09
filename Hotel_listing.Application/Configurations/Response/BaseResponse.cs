@@ -12,12 +12,5 @@ public class BaseResponse<TData,TError> : IBaseResponse<TData, TError>
     public int? Count { get; set; }
     public TData? Results { get; set; }
     public TError? Errors { get; set; }
-
-    public T BuildResult<T>(Action<T>? responseBuilder) where T : new()
-    {
-        var response = new T();
-        responseBuilder?.Invoke(response);
-        return response;
-    }
 }
 

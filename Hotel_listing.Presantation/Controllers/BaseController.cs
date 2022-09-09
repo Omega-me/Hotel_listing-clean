@@ -2,6 +2,7 @@
 using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
+using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_listing.Presantation.Controllers;
@@ -13,15 +14,11 @@ public partial class BaseController<T>:ControllerBase where T:class
     protected readonly ICommands Command;
     protected readonly IQuery Query;
     protected readonly IMapper Mapper;
-    protected readonly ILogger<T> Logger;
-    public BaseController(IQuery query,ICommands command,IMapper mapper) : this(query, command,mapper,null!)
-    { }
-    public BaseController(IQuery query,ICommands command,IMapper mapper,ILogger<T> logger)
+    public BaseController(IQuery query,ICommands command,IMapper mapper)
     {
         Query = query;
         Command = command;
         Mapper = mapper;
-        Logger = logger;
     }
 
     // A set of virtual methods here which can be override on the children classes 
@@ -50,11 +47,19 @@ public partial class BaseController<T>:ControllerBase where T:class
                 return Ok(response);
         }
     }
-    protected virtual ActionResult HandleResponse(BaseResponse<object,object> response)
+    protected virtual ActionResult HandleResponse(BaseResponse<List<T>,BaseError> response)
     {
         return ResponseBuilder(response);
     }
-    protected virtual ActionResult HandleResponse(CountryResponse response)
+    protected virtual ActionResult HandleResponse(BaseResponse<T,BaseError> response)
+    {
+        return ResponseBuilder(response);
+    }
+    protected virtual ActionResult HandleResponse(CountryResponse<List<Country>> response)
+    {
+        return ResponseBuilder(response);
+    }
+    protected virtual ActionResult HandleResponse(CountryResponse<Country> response)
     {
         return ResponseBuilder(response);
     }
