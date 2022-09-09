@@ -19,12 +19,14 @@ public class CountryController:BaseController<Country>
     { }
 
     [HttpGet]
-    public async Task<ActionResult<List<Country>>> GetCountries([FromQuery] int _size=10, int _page=1, int _max=50)
+    public async Task<ActionResult<List<Country>>> GetCountries([FromQuery] string _sort, int _size=10, int _page=1, int _max=50)
     {
+        //https://dynamic-linq.net/ for sort and filter 
         // Logger.LogInformation(TestMethode("Test"));
-        return HandleResponse(await CountryManager.GetCountries(Query,new QueryOptions<Country>()
+        return HandleResponse(await CountryManager.GetCountries(Query,new QueryParams<Country>()
         {
-            Pagination = new PaginationOptions()
+            Sort = _sort,
+            Pagination = new PaginationParams()
             {
                 PageNumber = _page,
                 PageSize = _size,

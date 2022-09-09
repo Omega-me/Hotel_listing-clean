@@ -1,6 +1,6 @@
 ﻿namespace Hotel_listing.Application.Contracts.RepositoryManager.Options;
 
-public class PaginationOptions
+public class PaginationParams
 {
     private int _pageSize;
     private int _pageNumber;
@@ -53,7 +53,7 @@ public class PaginationOptions
 
     public int PageNumber
     {
-        get => _pageNumber==0?1:_pageNumber;
+        get => _pageNumber == 0 ? 1 : _pageNumber;
         set => _pageNumber = value == 0 ? 1 : value;
     }
 }

@@ -16,7 +16,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         _context = context;
         _db = _context.Set<T>();
     }
-    public async Task<List<T>> GetAll(QueryOptions<T> options)
+    public async Task<List<T>> GetAll(QueryParams<T> options)
     {
         IQueryable<T> query = _db;
         if (options.Expression != null)

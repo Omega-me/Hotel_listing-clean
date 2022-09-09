@@ -11,13 +11,12 @@ namespace Hotel_listing.Presantation.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse> GetCountries(IQuery query,QueryOptions<Country> queryOptions)
+    public static async Task<CountryResponse> GetCountries(IQuery query,QueryParams<Country> queryOptions)
     {
-        IList<Country> countries =await query.Country.GetAll(new QueryOptions<Country>()
+        IList<Country> countries =await query.Country.GetAll(new QueryParams<Country>()
         {
             Includes = new List<string>{"Hotels"},
             Pagination = queryOptions.Pagination,
-            OrderBy = o=>o.OrderBy(country=>country.Id)
         });
         return new CountryResponse().BuildResult<CountryResponse>(r =>
         {
