@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using AutoMapper;
+﻿using AutoMapper;
 using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Options;
@@ -16,13 +15,9 @@ namespace Hotel_listing.Presantation.Controllers;
 [CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
-    private readonly ILogger<CountryController> _logger;
-
-    public CountryController(IQuery query, ICommands command,IMapper mapper,ILogger<CountryController> logger) 
-        : base(query,command,mapper)
-    {
-        _logger = logger;
-    }
+    public CountryController(IQuery query, ICommands command,IMapper mapper,IHttpContextAccessor context) 
+        : base(query,command,mapper,context)
+    { }
 
     [HttpGet]
     [Produces("application/json")]
@@ -30,13 +25,21 @@ public class CountryController:BaseController<Country>
     [ProducesResponseType(StatusCodes.Status400BadRequest , Type = typeof(BaseResponse<object,List<BaseError>>))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized,Type = typeof(BaseResponse<object,List<BaseError>>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(BaseResponse<object,List<BaseError>>))]
-    public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries([FromQuery] string? _sort,string? _include, int _size=10, int _page=1, int _max=50)
-    {
+    public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
+        [FromQuery(Name = "_filter")] string? _filter,
+        [FromQuery(Name = "_sort")] string? _sort,
+        [FromQuery(Name = "_include")] string? _include,
+        [FromQuery(Name = "_size")] int _size=10,
+        [FromQuery(Name = "_page")] int _page=1,
+        [FromQuery(Name = "_max")] int _max=50
+        ) {
         // Logger.LogInformation(TestMethode("Test"));
-        return HandleResponse(await CountryManager.GetCountries(Query,new QueryParams<Country>()
+        return HandleResponse(await CountryManager.GetCountries(Query,new Options<Country>()
         {
             Sort = _sort,
             Includes = _include,
+            Filter = _filter,
+            Context = Context.HttpContext,
             Pagination = new PaginationParams()
             {
                 PageNumber = _page,
@@ -45,7 +48,7 @@ public class CountryController:BaseController<Country>
             }
         }));
     }
-        
+    
     [HttpGet("{id:int}")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountryResponse<Country>))]

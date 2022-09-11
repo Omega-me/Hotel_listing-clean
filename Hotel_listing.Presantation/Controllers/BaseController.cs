@@ -14,11 +14,14 @@ public partial class BaseController<T>:ControllerBase where T:class
     protected readonly ICommands Command;
     protected readonly IQuery Query;
     protected readonly IMapper Mapper;
-    public BaseController(IQuery query,ICommands command,IMapper mapper)
+    protected readonly IHttpContextAccessor Context;
+
+    public BaseController(IQuery query,ICommands command,IMapper mapper,IHttpContextAccessor context)
     {
         Query = query;
         Command = command;
         Mapper = mapper;
+        Context = context;
     }
 
     // A set of virtual methods here which can be override on the children classes 

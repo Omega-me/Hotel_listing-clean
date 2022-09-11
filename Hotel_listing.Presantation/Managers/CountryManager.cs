@@ -11,24 +11,19 @@ namespace Hotel_listing.Presantation.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,QueryParams<Country>? queryOptions)
+    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,Options<Country>? options)
     {
-        var countries =await query.Country.GetAll(new QueryParams<Country>()
-        {
-            Includes = queryOptions.Includes,
-            Pagination = queryOptions.Pagination,
-            Sort = queryOptions.Sort,
-        });
+        var countries =await query.Country.GetAll(options);
         
         return new CountryResponse<List<Country>>
         {
             StatusCode = StatusCodes.Status200OK,
             Results = countries,
-            PageSize = queryOptions.Pagination.PageSize,
+            PageSize = options.Pagination.PageSize,
             Success = true,
             Count = countries.Count,
-            PageNumber = queryOptions.Pagination.PageNumber,
-            MaxPageSize = queryOptions.Pagination.MaxPageSize,
+            PageNumber = options.Pagination.PageNumber,
+            MaxPageSize = options.Pagination.MaxPageSize,
         };
     }
     public static async Task<CountryResponse<Country>> GetCountry(int id, IQuery query)

@@ -5,6 +5,6 @@ namespace Hotel_listing.Application.Contracts.RepositoryManager.Query;
 
 public interface IBaseQuery<T> where T :class
 {
-    Task<List<T>> GetAll(QueryParams<T> options);
+    Task<List<T>> GetAll(Options<T> options);
     Task<T> Get(Expression<Func<T, bool>> expression, List<string>? includes = null);
 }
