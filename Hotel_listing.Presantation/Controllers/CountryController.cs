@@ -9,6 +9,7 @@ using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Presantation.Managers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace Hotel_listing.Presantation.Controllers;
 
@@ -40,6 +41,7 @@ public class CountryController:BaseController<Country>
             Includes = _include,
             Filter = _filter,
             Context = Context.HttpContext,
+            OrderBy = o=>o.OrderBy(country=>country.Id),
             Pagination = new PaginationParams()
             {
                 PageNumber = _page,

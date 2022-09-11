@@ -7,5 +7,6 @@ public class Country
     public int Id { get; init; }
     public string Name { get; set; }
     public string ShortName { get; set; }
+    public bool IsEuropeCountry { get; set; }
     public ICollection<Hotel>? Hotels { get; set; }
 }

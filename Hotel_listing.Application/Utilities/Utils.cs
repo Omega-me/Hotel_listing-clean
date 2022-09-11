@@ -1,4 +1,6 @@
-﻿namespace Hotel_listing.Application.Utilities
+﻿using System.Text.RegularExpressions;
+
+namespace Hotel_listing.Application.Utilities
 {
     public static class Utils
     {
@@ -11,6 +13,25 @@
 
         public static string QueryFilterTransformer(string queryFilter)
         {
+            string valuePattern = @"/\[(.*?)\]/g";
+            // string logicPattern = @"/\{(.*?)\}/g";
+            // string operatorPattern = @"/\((.*?)\)/g";
+            // string valuePattern = @"/(?<=\[).+?(?=\])/g";
+            // string logicPattern = @"/(?<=\{).+?(?=\})/g";
+            // string operatorPattern = @"/(?<=\().+?(?=\))/g";
+            // Regex valueRg = new Regex(valuePattern);
+            // Regex logicRg = new Regex(logicPattern);
+            // Regex operatorRg = new Regex(operatorPattern);
+            // MatchCollection values = valueRg.Matches(queryFilter);
+            // MatchCollection logics = logicRg.Matches(queryFilter);
+            // MatchCollection operators = operatorRg.Matches(queryFilter);
+
+            Match match = Regex.Match(queryFilter,valuePattern,RegexOptions.Compiled);
+            if (match.Success)
+            {
+                var value = match.Value;
+            }
+
             string filter =  queryFilter
                     .Replace("(=)", "==")
                     .Replace("(!=)", "!=")
@@ -23,6 +44,7 @@
                     .Replace("{and}", " and ")
                     .Replace("{or}", " or ")
                 ;
+
             return filter;
         }
 
