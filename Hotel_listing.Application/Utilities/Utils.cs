@@ -26,17 +26,16 @@ namespace Hotel_listing.Application.Utilities
                     .Replace("(>=)", ">=")
                     .Replace("(<)", "<")
                     .Replace("(<=)", "<=")
-                    .Replace("[","")
-                    .Replace("]","")
                     .Replace("{and}", " and ")
                     .Replace("{or}", " or ")
                     .Replace("{&&}"," and ")
                     .Replace("{||}"," or ")
-                ;
+                    .Replace("[","")
+                    .Replace("]","");
             List<string> listFilter = new List<string> {filter};
-            for (int i = 0; i < valueMatches.Count; i++)
+            foreach (Match match in valueMatches)
             {
-                listFilter.Add(valueMatches[i].Value);
+                listFilter.Add(match.Value);                
             }
             return listFilter;
         }

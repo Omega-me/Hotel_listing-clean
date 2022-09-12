@@ -54,6 +54,10 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         {
             query = query.OrderBy(Utils.QuerySortTransformer(options.Sort));
         }
+        else
+        {
+            query = query.OrderBy("id");
+        }
 
         //Add OrderBy
         if (options.OrderBy != null)

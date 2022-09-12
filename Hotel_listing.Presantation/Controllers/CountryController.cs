@@ -35,13 +35,13 @@ public class CountryController:BaseController<Country>
         [FromQuery(Name = "_max")] int _max=50
         ) {
         // Logger.LogInformation(TestMethode("Test"));
+        //https://medium.com/c-sharp-progarmming/configure-annotations-in-swagger-documentation-for-asp-net-core-api-8215596907c7
         return HandleResponse(await CountryManager.GetCountries(Query,new Options<Country>()
         {
             Sort = _sort,
             Includes = _include,
             Filter = _filter,
             Context = Context.HttpContext,
-            OrderBy = o=>o.OrderBy(country=>country.Id),
             Pagination = new PaginationParams()
             {
                 PageNumber = _page,
