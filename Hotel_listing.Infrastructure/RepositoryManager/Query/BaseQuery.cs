@@ -32,7 +32,10 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         //Add filters
         if (options.Filter != null)
         {
-            query = query.Where(Utils.QueryFilterTransformer(options.Filter));
+            List<string> filters = Utils.QueryFilterTransformer(options.Filter);
+            string filter = filters[0];
+            string[] arr = filters.Skip(1).ToArray();
+            query = query.Where(filter,arr);
         }
                 
         //Include relations

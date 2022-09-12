@@ -11,41 +11,34 @@ namespace Hotel_listing.Application.Utilities
             return path;
         }
 
-        public static string QueryFilterTransformer(string queryFilter)
+        public static List<string> QueryFilterTransformer(string queryFilter)
         {
-            string valuePattern = @"/\[(.*?)\]/g";
-            // string logicPattern = @"/\{(.*?)\}/g";
-            // string operatorPattern = @"/\((.*?)\)/g";
-            // string valuePattern = @"/(?<=\[).+?(?=\])/g";
-            // string logicPattern = @"/(?<=\{).+?(?=\})/g";
-            // string operatorPattern = @"/(?<=\().+?(?=\))/g";
-            // Regex valueRg = new Regex(valuePattern);
-            // Regex logicRg = new Regex(logicPattern);
-            // Regex operatorRg = new Regex(operatorPattern);
-            // MatchCollection values = valueRg.Matches(queryFilter);
-            // MatchCollection logics = logicRg.Matches(queryFilter);
-            // MatchCollection operators = operatorRg.Matches(queryFilter);
-
-            Match match = Regex.Match(queryFilter,valuePattern,RegexOptions.Compiled);
-            if (match.Success)
-            {
-                var value = match.Value;
-            }
-
-            string filter =  queryFilter
+            string valuePattern = @"(?<=\[).+?(?=\])";
+            Regex valueRg = new Regex(valuePattern);
+            MatchCollection valueMatches = valueRg.Matches(queryFilter);
+            var incrementer = 0;
+            var replacedQueryFilter = valueRg.Replace(queryFilter, match => $"@{(incrementer++).ToString()}");
+            
+            string filter =  replacedQueryFilter
                     .Replace("(=)", "==")
                     .Replace("(!=)", "!=")
                     .Replace("(>)", ">")
                     .Replace("(>=)", ">=")
                     .Replace("(<)", "<")
                     .Replace("(<=)", "<=")
-                    .Replace("[","\"")
-                    .Replace("]","\"")
+                    .Replace("[","")
+                    .Replace("]","")
                     .Replace("{and}", " and ")
                     .Replace("{or}", " or ")
+                    .Replace("{&&}"," and ")
+                    .Replace("{||}"," or ")
                 ;
-
-            return filter;
+            List<string> listFilter = new List<string> {filter};
+            for (int i = 0; i < valueMatches.Count; i++)
+            {
+                listFilter.Add(valueMatches[i].Value);
+            }
+            return listFilter;
         }
 
         public static string QuerySortTransformer(string querySort)
