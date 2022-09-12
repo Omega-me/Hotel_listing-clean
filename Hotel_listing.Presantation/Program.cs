@@ -1,4 +1,6 @@
 using Hotel_listing.Application.Configurations;
+using Hotel_listing.Infrastructure.DatabaseManager;
+using Hotel_listing.Infrastructure.RepositoryManager;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Hotel_listing.Presantation.Extensions;
 using Microsoft.EntityFrameworkCore;

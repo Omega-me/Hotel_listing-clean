@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
 
-namespace Hotel_listing.Application.Contracts.RepositoryManager.Options;
+namespace Hotel_listing.Application.Configurations.RepositoryOptions;
 
 public class Options<T>
 {

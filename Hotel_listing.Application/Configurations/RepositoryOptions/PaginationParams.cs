@@ -1,4 +1,4 @@
-﻿namespace Hotel_listing.Application.Contracts.RepositoryManager.Options;
+﻿namespace Hotel_listing.Application.Configurations.RepositoryOptions;
 
 public class PaginationParams
 {

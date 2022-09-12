@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
-using Hotel_listing.Application.Contracts.RepositoryManager.Options;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using Hotel_listing.Application.Configurations.RepositoryOptions;
 using Microsoft.VisualBasic.CompilerServices;
 using Utils = Hotel_listing.Application.Utilities.Utils;
 

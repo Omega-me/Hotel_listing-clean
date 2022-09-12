@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Hotel_listing.Application.Configurations.RepositoryOptions;
 using Hotel_listing.Application.Configurations.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
-using Hotel_listing.Application.Contracts.RepositoryManager.Options;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;

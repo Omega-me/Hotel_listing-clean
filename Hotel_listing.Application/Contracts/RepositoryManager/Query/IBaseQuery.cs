@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Hotel_listing.Application.Contracts.RepositoryManager.Options;
+using Hotel_listing.Application.Configurations.RepositoryOptions;
 
 namespace Hotel_listing.Application.Contracts.RepositoryManager.Query;
 
