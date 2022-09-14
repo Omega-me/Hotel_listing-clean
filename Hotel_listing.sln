@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel_listing.Core", "Hotel_listing.Core", "{F99F94C0-8685-4276-9ADA-ABE6224578A6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F99F94C0-8685-4276-9ADA-ABE6224578A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel_listing.Domain", "Hotel_listing.Domain\Hotel_listing.Domain.csproj", "{4BC5BBF6-CC86-4C2F-A9E5-12D71B05501E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel_listing.Application", "Hotel_listing.Application\Hotel_listing.Application.csproj", "{4F74C1F8-B79E-43FA-AA67-202C655EB121}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel_listing.External", "Hotel_listing.External", "{8E9C3133-F552-4BDC-9533-898372750FDF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{8E9C3133-F552-4BDC-9533-898372750FDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel_listing.Infrastructure", "Hotel_listing.Infrastructure\Hotel_listing.Infrastructure.csproj", "{59787A1C-307E-4E5D-B760-BD63A8F06A81}"
 EndProject
@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{5010E17D-641
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBB396E5-3A8B-4434-848D-5C3B3EA22B5E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel_listing.Infrastructure", "Hotel_listing.Infrastructure", "{AE71605B-380C-4F20-B291-5CA6CFCB2570}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{AE71605B-380C-4F20-B291-5CA6CFCB2570}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel_listing.Presantation", "Hotel_listing.Presantation", "{2E39F3FC-D95C-43CE-8C58-E741E8B291A2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presantation", "Presantation", "{2E39F3FC-D95C-43CE-8C58-E741E8B291A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel_listing.Persistence", "Hotel_listing.Persistence\Hotel_listing.Persistence.csproj", "{97A40CF8-C4B9-49D1-8D85-9E4752A0DB61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel_listing.Authentication", "Hotel_listing.Authentication\Hotel_listing.Authentication.csproj", "{BB5C5553-6114-4A22-A52D-1F711084B930}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel_listing.API", "Hotel_listing.API", "{2C889B38-70CE-4593-84FD-2DFACD6D6DD0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{2C889B38-70CE-4593-84FD-2DFACD6D6DD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
