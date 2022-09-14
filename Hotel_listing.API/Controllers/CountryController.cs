@@ -25,12 +25,12 @@ public class CountryController:BaseController<Country>
     /// GET ALL
     /// </summary>
     [HttpGet]
-    [Produces(API_Const.PRODUCES_JSON, new[] { API_Const.PRODUCES_XML })]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET_ALL, Description = API_Const.SWAGGER_OP_DESCR_GETALL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]
     public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? _filter,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? _sort,
@@ -58,12 +58,12 @@ public class CountryController:BaseController<Country>
     /// GET ONE
     /// </summary>
     [HttpGet("{id:int}")]
-    [Produces(API_Const.PRODUCES_JSON, new[] { API_Const.PRODUCES_XML })]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET, Description = API_Const.SWAGGER_OP_DESCR_GET)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]
     public async Task<ActionResult<CountryResponse<Country>>> GetCountry(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.ICLUDE_DESCR, Required = false)] string? _include)
@@ -75,12 +75,12 @@ public class CountryController:BaseController<Country>
     /// CREATE
     /// </summary>
     [HttpPost]
-    [Produces(API_Const.PRODUCES_JSON, new[] { API_Const.PRODUCES_XML })]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary =API_Const.CREATE, Description = API_Const.SWAGGER_OP_DESCR_CREATE)]
     [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_400)]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]
     public async Task<ActionResult<CountryResponse<Country>>> CreateCountry([FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CreateCountryDto data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
@@ -90,12 +90,12 @@ public class CountryController:BaseController<Country>
     /// DELETE
     /// </summary>
     [HttpDelete("{id:int}")]
-    [Produces(API_Const.PRODUCES_JSON, new[] { API_Const.PRODUCES_XML })]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET, Description = API_Const.SWAGGER_OP_DESCR_GET)]
     [SwaggerResponse(StatusCodes.Status204NoContent,API_Const.SWAGGER_RES_DESCR_204)]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
+    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
     public async Task<IActionResult> DeleteCountry([SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id)
     {
@@ -106,12 +106,12 @@ public class CountryController:BaseController<Country>
     /// UPDATE
     /// </summary>
     [HttpPut("{id:int}")]
-    [Produces(API_Const.PRODUCES_JSON, new[] { API_Const.PRODUCES_XML })]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.UPDATE, Description = API_Const.SWAGGER_OP_DESCR_GET)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200 , typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
+    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountry(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
@@ -124,12 +124,12 @@ public class CountryController:BaseController<Country>
     /// UPDATE PARTIAL
     /// </summary>
     [HttpPatch("{id:int}")]
-    [Produces(API_Const.PRODUCES_JSON, new[] { API_Const.PRODUCES_XML })]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.UPDATE_PARTIAL, Description = API_Const.SWAGGER_OP_DESCR_GET)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200 , typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
+    [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountryPartial(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
