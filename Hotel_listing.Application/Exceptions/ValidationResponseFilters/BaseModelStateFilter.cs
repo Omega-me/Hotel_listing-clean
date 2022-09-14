@@ -1,4 +1,4 @@
-﻿using Hotel_listing.Application.Configurations.Response;
+﻿using Hotel_listing.Application.Common.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

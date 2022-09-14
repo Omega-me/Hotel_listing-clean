@@ -8,5 +8,4 @@ public interface IBaseCommand<T> where T:class
     void Update(T entity);      
     void UpdatePartial(T entity,JsonPatchDocument data);
     Task Delete(int id);
-    void DeleteRange(IEnumerable<T> enitites);
 }

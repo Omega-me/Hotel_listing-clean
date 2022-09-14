@@ -1,4 +1,4 @@
-﻿using Hotel_listing.Application.Configurations.Response;
+﻿using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Domain.Entitites;
-using Hotel_listing.Infrastructure.DatabaseManager.Context;
+using Hotel_listing.Persistence.Context;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Command;
 

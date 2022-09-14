@@ -2,11 +2,10 @@
 
 namespace Hotel_listing.Domain.Entitites;
 
-public class Hotel
+public class Hotel : BaseEntity
 {
-    public int Id { get; set; }       
     public string Name { get; set; }       
-    public string Adrsess { get; set; }
+    public string Addrsess { get; set; }
     public double Rating { get; set; }
     [ForeignKey(nameof(Country))]
     public int? CountryId { get; set; }

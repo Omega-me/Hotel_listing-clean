@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Hotel_listing.Application\Hotel_listing.Application.csproj" />
-      <ProjectReference Include="..\Hotel_listing.Persistence\Hotel_listing.Persistence.csproj" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
+      <ProjectReference Include="..\Hotel_listing.Application\Hotel_listing.Application.csproj" />
     </ItemGroup>
 
 </Project>

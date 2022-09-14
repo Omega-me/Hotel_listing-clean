@@ -1,5 +1,5 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
-using Hotel_listing.Infrastructure.DatabaseManager.Context;
+using Hotel_listing.Persistence.Context;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,9 +32,4 @@ public class BaseCommand<T>: IBaseCommand<T> where T:class
         var entity =await _db.FindAsync(id);
         if (entity != null) _db.Remove(entity);
     }
-
-    public void DeleteRange(IEnumerable<T> enitites) {
-        _db.RemoveRange(enitites);
-    }
-
 }

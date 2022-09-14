@@ -1,11 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
-using Hotel_listing.Infrastructure.DatabaseManager.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
-using Hotel_listing.Application.Configurations.RepositoryOptions;
-using Microsoft.VisualBasic.CompilerServices;
-using Utils = Hotel_listing.Application.Utilities.Utils;
+using Hotel_listing.Application.Common.RepositoryOptions;
+using Hotel_listing.Application.Utilities;
+using Hotel_listing.Persistence.Context;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 
@@ -77,12 +76,15 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         return await query.AsNoTracking().ToListAsync();
     }
 
-    public async Task<T> Get(Expression<Func<T, bool>> expression, List<string>? includes = null)
+    public async Task<T> Get(Expression<Func<T, bool>> expression, string? includes = null)
     {
         IQueryable<T> query = _db;
+        
+        //Include relations
         if (includes != null)
         {
-            foreach (var includeProperty in includes)
+            string[] includeArray = includes.Split(",").ToArray();
+            foreach (var includeProperty in includeArray)
             {
                 query = query.Include(includeProperty);
             }

@@ -2,9 +2,8 @@
 
 namespace Hotel_listing.Domain.Entitites;
 
-public class Country
+public class Country : BaseEntity
 {
-    public int Id { get; init; }
     public string Name { get; set; }
     public string ShortName { get; set; }
     public bool IsEuropeCountry { get; set; }
