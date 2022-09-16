@@ -4,7 +4,7 @@
 /// </summary>
 
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
-using Hotel_listing.Persistence.Context;
+using Hotel_listing.Persistence;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Command;
 public partial class Commands : ICommands

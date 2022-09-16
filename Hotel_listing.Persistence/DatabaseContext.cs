@@ -7,7 +7,7 @@ using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Persistence.Configurations.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotel_listing.Persistence.Context;
+namespace Hotel_listing.Persistence;
 public partial class DatabaseContext : DbContext
 {
     public DatabaseContext(DbContextOptions options):base(options)

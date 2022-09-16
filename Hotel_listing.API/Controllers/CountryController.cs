@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using AutoMapper;
 using Hotel_listing.API.Common;
 using Hotel_listing.API.Managers;
 using Hotel_listing.Application.Common.RepositoryOptions;
@@ -8,9 +11,6 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Hotel_listing.Domain.Entitites;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Hotel_listing.API.Controllers;
 
@@ -91,7 +91,7 @@ public class CountryController:BaseController<Country>
     /// </summary>
     [HttpDelete("{id:int}")]
     [Produces(API_Const.PRODUCES_JSON)]
-    [SwaggerOperation(null, null, Summary = API_Const.GET, Description = API_Const.SWAGGER_OP_DESCR_GET)]
+    [SwaggerOperation(null, null, Summary = API_Const.DELETE, Description = API_Const.SWAGGER_OP_DESCR_GET)]
     [SwaggerResponse(StatusCodes.Status204NoContent,API_Const.SWAGGER_RES_DESCR_204)]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]

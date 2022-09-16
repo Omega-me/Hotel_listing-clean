@@ -3,7 +3,7 @@
 ///     If you want to do something custom with this class use partial instead
 /// </summary>
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
-using Hotel_listing.Persistence.Context;
+using Hotel_listing.Persistence;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 public partial class Query : IQuery

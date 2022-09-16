@@ -39,6 +39,7 @@ public static class API_Const
     internal const string GET_ALL = @"Get all";
     internal const string GET = @"Get one";
     internal const string CREATE = @"Create";
+    internal const string DELETE = @"Delete";
     internal const string UPDATE = @"Update";
     internal const string UPDATE_PARTIAL = @"Update partial";
 }

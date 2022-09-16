@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Utilities;
-using Hotel_listing.Persistence.Context;
+using DatabaseContext = Hotel_listing.Persistence.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 
