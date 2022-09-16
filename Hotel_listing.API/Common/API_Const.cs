@@ -25,6 +25,7 @@ public static class API_Const
     internal const string SWAGGER_OP_DESCR_GETALL = @"<strong>Get all the records from the database based on filters, pagination, sorting, and relations</strong>";
     internal const string SWAGGER_OP_DESCR_GET = @"<strong>Get one record</strong>";
     internal const string SWAGGER_OP_DESCR_CREATE = @"<strong>Insert a record</strong>";
+    internal const string SWAGGER_OP_DESCR_DELETE = @"<strong>Delete a record</strong>";
     internal const string SWAGGER_OP_DESCR_UPDATE = @"<Strong>Update a record</strong>";
     internal const string SWAGGER_OP_DESCR_UPDATE_PARTIAL = @"<strong>Update a record partial</strong>";
     internal const string SWAGGER_RES_DESCR_200 = @"If request resolve with a success response";

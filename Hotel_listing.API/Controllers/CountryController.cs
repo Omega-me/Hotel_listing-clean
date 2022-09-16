@@ -91,7 +91,7 @@ public class CountryController:BaseController<Country>
     /// </summary>
     [HttpDelete("{id:int}")]
     [Produces(API_Const.PRODUCES_JSON)]
-    [SwaggerOperation(null, null, Summary = API_Const.DELETE, Description = API_Const.SWAGGER_OP_DESCR_GET)]
+    [SwaggerOperation(null, null, Summary = API_Const.DELETE, Description = API_Const.SWAGGER_OP_DESCR_DELETE)]
     [SwaggerResponse(StatusCodes.Status204NoContent,API_Const.SWAGGER_RES_DESCR_204)]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
@@ -107,7 +107,7 @@ public class CountryController:BaseController<Country>
     /// </summary>
     [HttpPut("{id:int}")]
     [Produces(API_Const.PRODUCES_JSON)]
-    [SwaggerOperation(null, null, Summary = API_Const.UPDATE, Description = API_Const.SWAGGER_OP_DESCR_GET)]
+    [SwaggerOperation(null, null, Summary = API_Const.UPDATE, Description = API_Const.SWAGGER_OP_DESCR_UPDATE)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200 , typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
@@ -125,7 +125,7 @@ public class CountryController:BaseController<Country>
     /// </summary>
     [HttpPatch("{id:int}")]
     [Produces(API_Const.PRODUCES_JSON)]
-    [SwaggerOperation(null, null, Summary = API_Const.UPDATE_PARTIAL, Description = API_Const.SWAGGER_OP_DESCR_GET)]
+    [SwaggerOperation(null, null, Summary = API_Const.UPDATE_PARTIAL, Description = API_Const.SWAGGER_OP_DESCR_UPDATE_PARTIAL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200 , typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
