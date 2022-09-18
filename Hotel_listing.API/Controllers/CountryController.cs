@@ -9,6 +9,7 @@ using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
+using Hotel_listing.Application.Exceptions;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Hotel_listing.Domain.Entitites;
 
@@ -30,7 +31,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? _filter,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? _sort,
@@ -63,7 +64,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> GetCountry(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.ICLUDE_DESCR, Required = false)] string? _include)
@@ -80,7 +81,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_201, typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_400)]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> CreateCountry([FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CreateCountryDto data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
@@ -96,7 +97,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409)]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<IActionResult> DeleteCountry([SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id)
     {
         return HandleResponse(await CountryManager.DeleteCountry(id,Query,Command));
@@ -112,7 +113,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409)]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountry(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
         [FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CountryDto data)
@@ -130,7 +131,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_409)]
-    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(CountryResponse<object>))]
+    [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountryPartial(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
         [FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] JsonPatchDocument data)
