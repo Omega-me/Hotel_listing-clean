@@ -77,7 +77,7 @@ public class CountryController:BaseController<Country>
     [HttpPost]
     [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary =API_Const.CREATE, Description = API_Const.SWAGGER_OP_DESCR_CREATE)]
-    [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<Country>))]
+    [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_201, typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_400)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500)]

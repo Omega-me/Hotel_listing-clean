@@ -1,10 +1,10 @@
 using Hotel_listing.API;
+using Hotel_listing.API.Middleware;
 using Hotel_listing.Application.Common;
 using Hotel_listing.Infrastructure;
 using Hotel_listing.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using DatabaseContext = Hotel_listing.Persistence.DatabaseContext;
 
 Log.Logger = new LoggerConfiguration().CreateLogger();
 
@@ -42,6 +42,8 @@ try
     #endregion
 
     #region HTTP request pipeline (Middlewares)
+
+    app.UseMiddleware<ExceptionMiddleware>();
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();

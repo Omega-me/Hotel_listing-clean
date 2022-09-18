@@ -19,7 +19,7 @@ public static class API_Const
     internal const string SIZE_DESCR = @"Size query string for setting the page size on paginated response data: <em>10 default</em>";
     internal const string PAGE_DESCR = @"Page query string for setting the page number on paginated response data: <em>1 default</em>";
     internal const string MAX_DESCR = @"Max query string for setting the maximum page size on paginated response data: <em>50 default</em>";
-    internal const string ID_DESCR = @"Id to get the object";
+    internal const string ID_DESCR = @"Recor Id";
     internal const string BODY_DESCR = @"Object of type to create";
     internal const string PRODUCES_JSON = @"application/json";
     internal const string SWAGGER_OP_DESCR_GETALL = @"<strong>Get all the records from the database based on filters, pagination, sorting, and relations</strong>";
@@ -43,4 +43,5 @@ public static class API_Const
     internal const string DELETE = @"Delete";
     internal const string UPDATE = @"Update";
     internal const string UPDATE_PARTIAL = @"Update partial";
+    internal const string SERVER_ERROR = "Server error";
 }
