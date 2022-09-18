@@ -8,8 +8,9 @@ using Hotel_listing.Domain.Entitites;
 namespace Hotel_listing.Application.Common;
 public partial class MapperConfig : Profile
 {
-    public MapperConfig(bool isMapper)
+    public MapperConfig(string mapper)
     {
+        CreateMap<BaseEntity, BaseEntity>().ReverseMap();
         CreateMap<Country, Country>().ReverseMap();
         CreateMap<Hotel, Hotel>().ReverseMap();
     }
