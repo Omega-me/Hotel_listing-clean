@@ -35,7 +35,7 @@ public class CountryController:BaseController<Country>
     public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? _filter,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? _sort,
-        [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.ICLUDE_DESCR, Required = false)] string? _include,
+        [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? _include,
         [FromQuery(Name = API_Const.SIZE)][SwaggerParameter(API_Const.SIZE_DESCR, Required = false)] int _size=10,
         [FromQuery(Name = API_Const.PAGE)][SwaggerParameter(API_Const.PAGE_DESCR, Required = false)] int _page=1,
         [FromQuery(Name = API_Const.MAX)][SwaggerParameter(API_Const.MAX_DESCR, Required = false)] int _max=50

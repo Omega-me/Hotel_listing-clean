@@ -27,7 +27,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         {
             query = query.Where(options.Expression);
         }
-
+        
         //Add filters
         if (options.Filter != null)
         {
