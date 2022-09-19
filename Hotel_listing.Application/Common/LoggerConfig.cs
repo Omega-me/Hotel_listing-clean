@@ -1,4 +1,4 @@
-﻿using Hotel_listing.Application.Utilities;
+﻿using Hotel_listing.Application.Common.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Serilog.Events;

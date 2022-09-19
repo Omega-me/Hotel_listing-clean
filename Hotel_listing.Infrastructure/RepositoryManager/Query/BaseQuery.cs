@@ -3,7 +3,7 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using Hotel_listing.Application.Common.RepositoryOptions;
-using Hotel_listing.Application.Utilities;
+using Hotel_listing.Application.Common.Utilities;
 using DatabaseContext = Hotel_listing.Persistence.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
@@ -31,9 +31,9 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         //Add filters
         if (options.Filter != null)
         {
-            List<string> filters = Utils.QueryFilterTransformer(options.Filter);
+            var filters = Utils.QueryFilterTransformer(options.Filter);
             string filter = filters[0];
-            string[] arr = filters.Skip(1).ToArray();
+            var arr = filters.Skip(1).ToArray();
             query = query.Where(filter,arr);
         }
                 

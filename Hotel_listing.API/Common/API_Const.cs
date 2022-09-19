@@ -9,8 +9,9 @@ public static class API_Const
     internal const string PAGE = "_page";
     internal const string MAX = "_max";
     internal const string QUERY_DESCR =@"Filter query string in the format <em>field(operator)[value]{logical-operator}field(operator)[value]...</em> 
-                       <em>operators => ( =, !=, <, <=, >, >=), 
-                       logical-operator => { and , &&, or, ||}</em>
+                       <em>operators => ( =, !=, <, <=, >, >=, in), 
+                       logical-operator => { and , &&, or, ||}</em>,
+                        in case of <em>in</em> operator add the values like [{value1,value2,value3,...}]
                      ";
     internal const string SORT_DESCR = @"Sort query string in the format <em>field1,field2_desc...</em> 
                        <em>if the <b>fieldname</b> is added as query string the records will be sorted on the ascending order, if the <b>fieldname_desc</b> is added as query string the records will be sorted on descending order</em>

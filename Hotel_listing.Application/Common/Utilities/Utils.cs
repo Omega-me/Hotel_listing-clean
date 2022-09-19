@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Hotel_listing.Application.Utilities
+namespace Hotel_listing.Application.Common.Utilities
 {
     public static class Utils
     {
@@ -11,7 +11,7 @@ namespace Hotel_listing.Application.Utilities
             return path;
         }
 
-        public static List<string> QueryFilterTransformer(string queryFilter)
+        public static List<dynamic> QueryFilterTransformer(string queryFilter)
         {
             string valuePattern = @"(?<=\[).+?(?=\])";
             Regex valueRg = new Regex(valuePattern);
@@ -26,16 +26,28 @@ namespace Hotel_listing.Application.Utilities
                     .Replace("(>=)", ">=")
                     .Replace("(<)", "<")
                     .Replace("(<=)", "<=")
+                    .Replace("(in)"," in ")
                     .Replace("{and}", " and ")
                     .Replace("{or}", " or ")
                     .Replace("{&&}"," and ")
                     .Replace("{||}"," or ")
                     .Replace("[","")
                     .Replace("]","");
-            List<string> listFilter = new List<string> {filter};
+            List<dynamic> listFilter = new List<dynamic> {filter};
             foreach (Match match in valueMatches)
             {
-                listFilter.Add(match.Value);                
+                if (match.Value.Contains("{") && match.Value.Contains("}"))
+                {
+                    string[] inValues = match.Value.Replace("{", "").
+                                                    Replace("}", "").
+                                                    Split(",").
+                                                    ToArray();
+                    listFilter.Add(inValues);
+                }
+                else
+                {
+                    listFilter.Add(match.Value);                
+                }
             }
             return listFilter;
         }
