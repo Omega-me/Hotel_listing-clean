@@ -67,7 +67,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> GetCountry(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
-        [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.ICLUDE_DESCR, Required = false)] string? _include)
+        [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? _include)
     {
         return HandleResponse(await CountryManager.GetCountry(Query,id,_include));
     }
