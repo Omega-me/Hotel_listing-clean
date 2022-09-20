@@ -145,10 +145,4 @@ public class CountryController:BaseController<Country>
     {
         return HandleResponse(await CountryManager.UpdateCountryPartial(id,data,Query,Command,Mapper));
     }
-
-    [HttpGet("test")]
-    public async Task<ActionResult<CountryResponse<List<DapperCountryDTO>>>> GetAllCounties()
-    {
-        return HandleResponse(await CountryManager.GetAllCountry(Db));
-    }
 }

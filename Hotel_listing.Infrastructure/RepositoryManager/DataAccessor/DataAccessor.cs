@@ -15,14 +15,6 @@ public class DataAccessor : IDataAccessor
     {
         _configuration = configuration;
     }
-
-    /// <summary>
-    /// Get data form database using sql query or stored procedures
-    /// </summary>
-    /// <param name="options"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TParams"></typeparam>
-    /// <returns></returns>
     public async Task<IEnumerable<T>> Query<T,TParams>(DataAccessorOptions<TParams> options)
     {
         using IDbConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(options.ConnectionId));
@@ -31,16 +23,9 @@ public class DataAccessor : IDataAccessor
             options.Prams,
             commandType : options.SqlType == Sqltype.Sql ? CommandType.Text : CommandType.StoredProcedure);
     }
-
-    /// <summary>
-    /// Set data to the database using sql query or stored procedures
-    /// </summary>
-    /// <param name="options"></param>
-    /// <typeparam name="TPramas"></typeparam>
     public async Task Command<TPramas>(DataAccessorOptions<TPramas> options)
     {
         using IDbConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(options.ConnectionId));
-
         await connection.ExecuteAsync(
             options.Sql,
             options.Prams,

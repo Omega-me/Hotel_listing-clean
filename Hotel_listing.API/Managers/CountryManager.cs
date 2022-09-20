@@ -1,6 +1,4 @@
-﻿using System.Data;
-using AutoMapper;
-using Dapper;
+﻿using AutoMapper;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
@@ -9,7 +7,6 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
-using Npgsql;
 
 namespace Hotel_listing.API.Managers;
 public static class CountryManager
@@ -160,25 +157,6 @@ public static class CountryManager
             Results = country,
             StatusCode = StatusCodes.Status200OK,
             Success = true,
-        };
-    }
-
-    public static async Task<CountryResponse<List<DapperCountryDTO>>> GetAllCountry(IDataAccessor db)
-    {
-        var query = $@"SELECT C.""Name"" as CountryName, ""ShortName"", H.""Name"" as HotelNamne, ""Rating""
-                        FROM ""Country"" AS C 
-                        left join ""Hotel"" H ON C.""Id"" = H.""CountryId""";
-        
-        var data = await db.Query<DapperCountryDTO, dynamic>(new DataAccessorOptions<dynamic>
-        {
-            Sql = query,
-            ConnectionId = "sqlConnectionPsql",
-            SqlType = Sqltype.Sql,
-            Prams = new { }
-        });
-        return new CountryResponse<List<DapperCountryDTO>>
-        {
-            Results = data as List<DapperCountryDTO>
         };
     }
     #endregion
