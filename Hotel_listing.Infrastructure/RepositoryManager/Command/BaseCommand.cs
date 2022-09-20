@@ -1,7 +1,7 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Persistence;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
-using DatabaseContext = Hotel_listing.Persistence.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Command;
 public class BaseCommand<T>: IBaseCommand<T> where T:class

@@ -1,6 +1,8 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Infrastructure.RepositoryManager.Command;
+using Hotel_listing.Infrastructure.RepositoryManager.DataAccessor;
 using Hotel_listing.Infrastructure.RepositoryManager.Query;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +14,6 @@ public static class RepositoryServiceRegistration
     {
         serviceCollection.AddTransient<IQuery,Query>();
         serviceCollection.AddTransient<ICommands,Commands>();
+        serviceCollection.AddTransient<IDataAccessor, DataAccessor>();
     }
 }

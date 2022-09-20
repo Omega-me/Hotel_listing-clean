@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Utilities;
-using DatabaseContext = Hotel_listing.Persistence.DatabaseContext;
+using Hotel_listing.Persistence;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 
@@ -28,8 +28,14 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
             query = query.Where(options.Expression);
         }
         
+        //Add search 
+        // if (!string.IsNullOrWhiteSpace(options.Search))
+        // {
+        //     query = query.Contains<T>(options.Search);
+        // }
+        
         //Add filters
-        if (options.Filter != null)
+        if (!string.IsNullOrWhiteSpace(options.Filter))
         {
             var filters = Utils.QueryFilterTransformer(options.Filter);
             string filter = filters[0];
@@ -38,7 +44,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         }
                 
         //Include relations
-        if (options.Includes != null)
+        if (!string.IsNullOrWhiteSpace(options.Includes))
         {
             string[] includeArray = options.Includes.Split(",").ToArray();
             foreach (var includeProperty in includeArray)
@@ -49,7 +55,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
 
         //Add sorting
         //sort by fields seperated by "," and add _desc after the field for descending order
-        if (options.Sort != null)
+        if (!string.IsNullOrWhiteSpace(options.Sort))
         {
             query = query.OrderBy(Utils.QuerySortTransformer(options.Sort));
         }

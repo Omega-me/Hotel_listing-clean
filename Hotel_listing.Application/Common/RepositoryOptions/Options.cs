@@ -12,4 +12,5 @@ public class Options<T>
     public string? Filter { get; set; }
     public string? Sort { get; set; }
     public string? Includes { get; set; }
+    public string? Search { get; set; }
 }

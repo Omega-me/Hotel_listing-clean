@@ -3,6 +3,7 @@
 public static class API_Const
 {
     internal const string FILTER = "_filter";
+    internal const string SEARCH = "_search";
     internal const string SORT = "_sort";
     internal const string INCLUDE = "_include";
     internal const string SIZE = "_size";
@@ -13,6 +14,8 @@ public static class API_Const
                        logical-operator => { and , &&, or, ||}</em>,
                         in case of <em>in</em> operator add the values like [{value1,value2,value3,...}]
                      ";
+
+    internal const string SEARCH_DESCR = "";
     internal const string SORT_DESCR = @"Sort query string in the format <em>field1,field2_desc...</em> 
                        <em>if the <b>fieldname</b> is added as query string the records will be sorted on the ascending order, if the <b>fieldname_desc</b> is added as query string the records will be sorted on descending order</em>
                      ";
