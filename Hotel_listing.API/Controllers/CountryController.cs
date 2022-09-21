@@ -7,7 +7,6 @@ using Hotel_listing.API.Managers;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
-using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Application.Exceptions;
@@ -19,8 +18,8 @@ namespace Hotel_listing.API.Controllers;
 [CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
-    public CountryController(IQuery query, ICommands command,IMapper mapper,IHttpContextAccessor context,IDataAccessor db) 
-        : base(query,command,mapper,context,db)
+    public CountryController(IQuery query, ICommands command,IMapper mapper,IHttpContextAccessor context) 
+        : base(query,command,mapper,context)
     { }
 
     /// <summary>
