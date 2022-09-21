@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using DatabaseContext = Hotel_listing.Persistence.DatabaseContext;
+using DatabaseContext = Hotel_listing.Persistence.Contexts.DatabaseContext;
 
 #nullable disable
 

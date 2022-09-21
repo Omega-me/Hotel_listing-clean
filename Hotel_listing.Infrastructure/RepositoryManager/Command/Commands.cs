@@ -5,6 +5,7 @@
 
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Persistence;
+using DatabaseContext = Hotel_listing.Persistence.Contexts.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Command;
 public partial class Commands : ICommands

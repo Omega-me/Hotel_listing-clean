@@ -1,6 +1,7 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Persistence;
+using DatabaseContext = Hotel_listing.Persistence.Contexts.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 

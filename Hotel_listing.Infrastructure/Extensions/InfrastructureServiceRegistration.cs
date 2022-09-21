@@ -6,7 +6,7 @@ using Hotel_listing.Infrastructure.RepositoryManager.DataAccessor;
 using Hotel_listing.Infrastructure.RepositoryManager.Query;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Hotel_listing.Infrastructure;
+namespace Hotel_listing.Infrastructure.Extensions;
 
 public static class RepositoryServiceRegistration
 {

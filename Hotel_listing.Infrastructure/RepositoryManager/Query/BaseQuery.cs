@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Utilities;
 using Hotel_listing.Persistence;
+using DatabaseContext = Hotel_listing.Persistence.Contexts.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 
