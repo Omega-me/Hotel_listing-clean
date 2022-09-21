@@ -19,13 +19,9 @@ namespace Hotel_listing.API.Controllers;
 [CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
-    private readonly IConfiguration _configuration;
-
-    public CountryController(IQuery query, ICommands command,IMapper mapper,IHttpContextAccessor context,IDataAccessor db,IConfiguration configuration) 
+    public CountryController(IQuery query, ICommands command,IMapper mapper,IHttpContextAccessor context,IDataAccessor db) 
         : base(query,command,mapper,context,db)
-    {
-        _configuration = configuration;
-    }
+    { }
 
     /// <summary>
     /// GET ALL
@@ -65,7 +61,7 @@ public class CountryController:BaseController<Country>
     /// <summary>
     /// GET ONE
     /// </summary>
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}", Name = "Get")]
     [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET, Description = API_Const.SWAGGER_OP_DESCR_GET)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<Country>))]
@@ -85,13 +81,13 @@ public class CountryController:BaseController<Country>
     [HttpPost]
     [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary =API_Const.CREATE, Description = API_Const.SWAGGER_OP_DESCR_CREATE)]
-    [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_201, typeof(CountryResponse<Country>))]
+    [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_201, typeof(CountryResponse<CountryDto>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_400)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<Country>>> CreateCountry([FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CreateCountryDto data)
+    public async Task<ActionResult<CountryResponse<CountryDto>>> CreateCountry([FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CreateCountryDto data)
     {
-        return HandleResponse(await CountryManager.CreateCountry(data,Command,Mapper));
+        return HandleResponse(await CountryManager.CreateCountry(data, Command, Mapper));
     }
     
     /// <summary>

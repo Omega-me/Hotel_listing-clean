@@ -2,7 +2,6 @@
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
-using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
@@ -40,7 +39,7 @@ public static class CountryManager
                 {   
                     new BaseError()
                     {
-                        ErrorMessage = "The Country you are looking for does not exists."
+                        ErrorMessage = $"The Country with Id {id} does not exists."
                     }
                 },
             };
@@ -58,6 +57,7 @@ public static class CountryManager
         Country country = mapper.Map<Country>(data);
         await command.Country.Insert(country);
         await command.Save();
+        
         return new CountryResponse<Country>()
         {
             Results = country,
@@ -77,7 +77,7 @@ public static class CountryManager
                 {   
                     new BaseError()
                     {
-                        ErrorMessage = "The Country you are looking for does not exists."
+                        ErrorMessage = $"The Country with Id {id} does not exists."
                     },
                 },
             };
@@ -101,7 +101,7 @@ public static class CountryManager
                 {   
                     new BaseError()
                     {
-                        ErrorMessage = "The Country you are looking for does not exists."
+                        ErrorMessage = $"The Country with Id {id} does not exists."
                     }
                 }
             };
@@ -117,7 +117,7 @@ public static class CountryManager
                 {
                     new BaseError()
                     {
-                        ErrorMessage = "The Country you are looking for does not exists."
+                        ErrorMessage = $"The Country with Id {id} does not exists."
                     }
                 },
             };
@@ -145,7 +145,7 @@ public static class CountryManager
                 {
                     new BaseError()
                     {
-                        ErrorMessage = "The Country you are looking for does not exists."
+                        ErrorMessage = $"The Country with Id {id} does not exists."
                     }
                 },
             };

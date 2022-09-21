@@ -12,6 +12,7 @@ public partial class MapperConfig
         CreateMap<Country,BaseCountryDto>().ReverseMap();
         CreateMap<Country, CreateCountryDto>().ReverseMap();
         CreateMap<Country, UpdateCountryDto>().ReverseMap();
+        CreateMap<CountryDto, CreateCountryDto>().ReverseMap();
         #endregion
     
         #region HotelDto

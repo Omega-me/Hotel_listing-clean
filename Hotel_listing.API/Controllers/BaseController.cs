@@ -40,7 +40,7 @@ public partial class BaseController<T>:ControllerBase where T:class
             case StatusCodes.Status200OK:
                 return Ok(response); 
             case StatusCodes.Status201Created:
-                return Created("",response.Results); 
+                return Created("",response); 
             case StatusCodes.Status204NoContent:
                 return NoContent(); 
             case StatusCodes.Status400BadRequest:
