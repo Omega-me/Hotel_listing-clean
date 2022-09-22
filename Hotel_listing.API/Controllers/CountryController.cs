@@ -42,7 +42,6 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<IPagedList<Country>>>> GetCountries(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? _filter,
-        [FromQuery(Name = API_Const.SEARCH)][SwaggerParameter(API_Const.SEARCH_DESCR, Required = false)]string? _search,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? _sort,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? _include,
         [FromQuery(Name = API_Const.SIZE)][SwaggerParameter(API_Const.SIZE_DESCR, Required = false)] int _size=10,
@@ -54,7 +53,6 @@ public class CountryController:BaseController<Country>
             Sort = _sort,
             Includes = _include,
             Filter = _filter,
-            Search = _search,
             Context = Context.HttpContext,
             Pagination = new PaginationParams()
             {
