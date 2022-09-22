@@ -1,8 +1,7 @@
 ﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
-using Hotel_listing.Persistence;
+using Hotel_listing.Persistence.Contexts;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
-using DatabaseContext = Hotel_listing.Persistence.Contexts.DatabaseContext;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Command;
 public class BaseCommand<T>: IBaseCommand<T> where T:class
@@ -24,6 +23,7 @@ public class BaseCommand<T>: IBaseCommand<T> where T:class
         _db.Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
     }
+
     public void UpdatePartial(T entity,JsonPatchDocument data) {
         data.ApplyTo(entity);
         _context.Entry(entity).State = EntityState.Modified;

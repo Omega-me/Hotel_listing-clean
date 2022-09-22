@@ -9,5 +9,5 @@ public class Hotel : BaseEntity
     public double Rating { get; set; }
     [ForeignKey(nameof(Country))]
     public int? CountryId { get; set; }
-    public virtual Country Country { get; set; }
+    public virtual Country? Country { get; set; }
 }

@@ -84,7 +84,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status409Conflict, API_Const.SWAGGER_RES_DESCR_400)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<CountryDto>>> CreateCountry([FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CreateCountryDto data)
+    public async Task<ActionResult<CountryResponse<Country>>> CreateCountry([FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] Country data)
     {
         return HandleResponse(await CountryManager.CreateCountry(data, Command, Mapper));
     }
@@ -118,7 +118,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountry(
         [SwaggerParameter(API_Const.ID_DESCR, Required = true)]int id,
-        [FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] CountryDto data)
+        [FromBody][SwaggerRequestBody(API_Const.BODY_DESCR, Required = true)] Country data)
     {
         return HandleResponse(await CountryManager.UpdateCountry(id,data,Query,Command,Mapper));
     }

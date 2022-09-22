@@ -3,7 +3,6 @@ using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
-using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
 
@@ -52,7 +51,7 @@ public static class CountryManager
             StatusCode = StatusCodes.Status200OK,
         };
     }
-    public static async Task<CountryResponse<Country>> CreateCountry(CreateCountryDto data,ICommands command,IMapper mapper)
+    public static async Task<CountryResponse<Country>> CreateCountry(Country data,ICommands command,IMapper mapper)
     {
         Country country = mapper.Map<Country>(data);
         await command.Country.Insert(country);
@@ -89,7 +88,7 @@ public static class CountryManager
             StatusCode = StatusCodes.Status204NoContent
         };
     }
-    public static async Task<CountryResponse<Country>> UpdateCountry(int id, CountryDto data, IQuery query, ICommands command, IMapper mapper)
+    public static async Task<CountryResponse<Country>> UpdateCountry(int id, Country data, IQuery query, ICommands command, IMapper mapper)
     {
         if (id != data.Id)
         {
@@ -106,7 +105,7 @@ public static class CountryManager
                 }
             };
         }
-        Country country = await query.Country.Get(c => c.Id == id);
+        Country country = await query.Country.Get(c => c.Id == id,"Hotels");
         if (country == null)
         {
             return new CountryResponse<Country>
@@ -122,12 +121,12 @@ public static class CountryManager
                 },
             };
         }
-        mapper.Map(data, country);
-        command.Country.Update(country);
+        var updatedData=mapper.Map(data, country);
+        command.Country.Update(updatedData);
         await command.Save();
         return new CountryResponse<Country>
         {
-            Results = country,
+            Results = updatedData,
             StatusCode = StatusCodes.Status200OK,
             Success = true,
         };
