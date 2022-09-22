@@ -56,10 +56,8 @@ public class PaginationParams
         get => _pageNumber == 0 ? 1 : _pageNumber;
         set => _pageNumber = value == 0 ? 1 : value;
     }
-    
     public int ResultsCount { get; set; }
     public int TotalPages => (int) Math.Ceiling(ResultsCount / (double) _pageSize);
-
     public bool HasPrevious => PageNumber > 1;
     public bool HasNext => PageNumber < TotalPages;
 

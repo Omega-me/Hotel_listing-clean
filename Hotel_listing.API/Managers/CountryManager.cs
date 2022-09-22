@@ -14,16 +14,16 @@ public static class CountryManager
     #region Managers and response builders
     public static async Task<CountryResponse<IPagedList<Country>>> GetCountries(IQuery query,Options<Country>? options)
     {
-        var countries =await query.Country.GetAll(options);
-        options.Pagination.ResultsCount = countries.ResultsCount;
+        var data =await query.Country.GetAll(options);
+        options.Pagination.ResultsCount = data.ResultsCount;
         options.Context.Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(options.Pagination));
         return new CountryResponse<IPagedList<Country>>
         {
             StatusCode = StatusCodes.Status200OK,
-            Results = countries.Results,
+            Results = data.Results,
             PageSize = options.Pagination.PageSize,
             Success = true,
-            Count = countries.Results.Count,
+            Count = data.Results.Count,
             PageNumber = options.Pagination.PageNumber,
         };
     }
