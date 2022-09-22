@@ -4,6 +4,8 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
+using Hotel_listing.Infrastructure.RepositoryManager.DataAccessor;
+using Hotel_listing.Persistence.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_listing.API.Controllers;
@@ -17,17 +19,15 @@ public partial class BaseController<T>:ControllerBase where T:class
     protected readonly IMapper Mapper;
     protected readonly IHttpContextAccessor Context;
     protected readonly IDataAccessor Db;
+    protected readonly DatabaseContext DataContext;
 
-    public BaseController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context)
+    public BaseController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context,DatabaseContext dataContext,IDataAccessor db)
     {
         Query = query;
         Command = command;
         Mapper = mapper;
         Context = context;
-    }
-
-    public BaseController(IQuery query,ICommands command,IMapper mapper,IHttpContextAccessor context,IDataAccessor db) : this(query,command,mapper,context)
-    {
+        DataContext = dataContext;
         Db = db;
     }
 

@@ -7,19 +7,26 @@ using Hotel_listing.API.Managers;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Application.Exceptions;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Hotel_listing.Domain.Entitites;
+using Hotel_listing.Persistence.Contexts;
 
 namespace Hotel_listing.API.Controllers;
 
 [CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
-    public CountryController(IQuery query, ICommands command,IMapper mapper,IHttpContextAccessor context) 
-        : base(query,command,mapper,context)
+    public CountryController(IQuery query,
+        ICommands command,
+        IMapper mapper,
+        IHttpContextAccessor context,
+        DatabaseContext dataContext,
+        IDataAccessor db) 
+        : base(query,command,mapper,context,dataContext,db)
     { }
 
     /// <summary>
