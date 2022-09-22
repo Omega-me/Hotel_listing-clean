@@ -14,6 +14,7 @@ using Hotel_listing.Application.Exceptions;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Persistence.Contexts;
+using X.PagedList;
 
 namespace Hotel_listing.API.Controllers;
 
@@ -39,7 +40,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
+    public async Task<ActionResult<CountryResponse<IPagedList<Country>>>> GetCountries(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? _filter,
         [FromQuery(Name = API_Const.SEARCH)][SwaggerParameter(API_Const.SEARCH_DESCR, Required = false)]string? _search,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? _sort,

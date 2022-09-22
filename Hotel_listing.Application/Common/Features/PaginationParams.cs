@@ -5,7 +5,7 @@ public class PaginationParams
     private int _pageSize;
     private int _pageNumber;
     private int _maxPageSize;
-
+    
     public int MaxPageSize
     {
         get => _maxPageSize == 0 ? 50 : _maxPageSize;
@@ -29,7 +29,7 @@ public class PaginationParams
             }
         }
     }
-
+    
     public int PageSize
     {
         get => _pageSize == 0 ? MaxPageSize : _pageSize > _maxPageSize ? MaxPageSize : _pageSize;
@@ -50,10 +50,17 @@ public class PaginationParams
             }
         }
     }
-
+    
     public int PageNumber
     {
         get => _pageNumber == 0 ? 1 : _pageNumber;
         set => _pageNumber = value == 0 ? 1 : value;
     }
+    
+    public int ResultsCount { get; set; }
+    public int TotalPages => (int) Math.Ceiling(ResultsCount / (double) _pageSize);
+
+    public bool HasPrevious => PageNumber > 1;
+    public bool HasNext => PageNumber < TotalPages;
+
 }

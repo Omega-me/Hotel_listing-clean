@@ -7,6 +7,7 @@ using Hotel_listing.Domain.Entitites;
 using Hotel_listing.Infrastructure.RepositoryManager.DataAccessor;
 using Hotel_listing.Persistence.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace Hotel_listing.API.Controllers;
 
@@ -57,7 +58,7 @@ public partial class BaseController<T>:ControllerBase where T:class
                 return Ok(response);
         }
     }
-    protected virtual ActionResult HandleResponse(BaseResponse<List<T>,BaseError> response)
+    protected virtual ActionResult HandleResponse(BaseResponse<IPagedList<T>,BaseError> response)
     {
         return ResponseBuilder(response);
     }
@@ -65,7 +66,7 @@ public partial class BaseController<T>:ControllerBase where T:class
     {
         return ResponseBuilder(response);
     }
-    protected virtual ActionResult HandleResponse(CountryResponse<List<Country>> response)
+    protected virtual ActionResult HandleResponse(CountryResponse<IPagedList<Country>> response)
     {
         return ResponseBuilder(response);
     }

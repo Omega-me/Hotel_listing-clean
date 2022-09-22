@@ -5,9 +5,9 @@ using System.Linq.Dynamic.Core;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Utilities;
 using Hotel_listing.Persistence.Contexts;
+using X.PagedList;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
-
 public class BaseQuery<T> : IBaseQuery<T> where T : class
 {
     private readonly DatabaseContext _context;
@@ -18,7 +18,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         _context = context;
         _db = _context.Set<T>();
     }
-    public async Task<List<T>> GetAll(Options<T> options)
+    public async Task<QueryReturn<T>> GetAll(Options<T> options)
     {
         IQueryable<T> query = _db;
         
@@ -69,17 +69,13 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         {
             query = options.OrderBy(query);
         }
-        
-        //Add pagination
-        if (options.Pagination != null)
+
+        return new QueryReturn<T>
         {
-            var number = options.Pagination.PageNumber;
-            var size = options.Pagination.PageSize;
-            var skip = (number - 1) * size;
-            query = query.Skip(skip).Take(size);
-        }
-        
-        return await query.AsNoTracking().ToListAsync();
+            Results = await query.AsNoTracking()
+                .ToPagedListAsync(options.Pagination.PageNumber, options.Pagination.PageSize),
+            ResultsCount = query.AsNoTracking().Count()
+        };
     }
 
     public async Task<T> Get(Expression<Func<T, bool>> expression, string? includes = null)

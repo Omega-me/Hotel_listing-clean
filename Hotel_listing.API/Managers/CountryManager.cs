@@ -5,24 +5,26 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
+using Newtonsoft.Json;
+using X.PagedList;
 
 namespace Hotel_listing.API.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,Options<Country>? options)
+    public static async Task<CountryResponse<IPagedList<Country>>> GetCountries(IQuery query,Options<Country>? options)
     {
         var countries =await query.Country.GetAll(options);
-        
-        return new CountryResponse<List<Country>>
+        options.Pagination.ResultsCount = countries.ResultsCount;
+        options.Context.Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(options.Pagination));
+        return new CountryResponse<IPagedList<Country>>
         {
             StatusCode = StatusCodes.Status200OK,
-            Results = countries,
+            Results = countries.Results,
             PageSize = options.Pagination.PageSize,
             Success = true,
-            Count = countries.Count,
+            Count = countries.Results.Count,
             PageNumber = options.Pagination.PageNumber,
-            MaxPageSize = options.Pagination.MaxPageSize,
         };
     }
     public static async Task<CountryResponse<Country>> GetCountry(IQuery query, int id, string? includes)
