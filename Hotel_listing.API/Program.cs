@@ -1,13 +1,11 @@
 using Hotel_listing.API;
 using Hotel_listing.API.Middleware;
 using Hotel_listing.Application.Common;
-using Hotel_listing.Infrastructure;
 using Hotel_listing.Infrastructure.Extensions;
-using Hotel_listing.Persistence;
+using Hotel_listing.Persistence.Contexts;
 using Hotel_listing.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using DatabaseContext = Hotel_listing.Persistence.Contexts.DatabaseContext;
 
 Log.Logger = new LoggerConfiguration().CreateLogger();
 

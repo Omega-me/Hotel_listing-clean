@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Hotel_listing.Infrastructure.Extensions;
 
-public static class RepositoryServiceRegistration
+public static class InfrastructureServiceRegistration
 {
     public static void ConfigureRepository(this IServiceCollection serviceCollection)
     {
