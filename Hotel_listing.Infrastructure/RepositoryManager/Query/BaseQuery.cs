@@ -2,25 +2,32 @@
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using AutoMapper;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Utilities;
+using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Persistence.Contexts;
 using X.PagedList;
 
 namespace Hotel_listing.Infrastructure.RepositoryManager.Query;
 public class BaseQuery<T> : IBaseQuery<T> where T : class
 {
-    private readonly DatabaseContext _context;
-    private readonly DbSet<T> _db;
+    protected readonly DatabaseContext Context;
+    protected readonly IDataAccessor Db;
+    protected readonly IMapper Mapper;
+    protected readonly DbSet<T> DataSet;
 
-    public BaseQuery(DatabaseContext context)
+    public BaseQuery(DatabaseContext context,IDataAccessor db,IMapper mapper)
     {
-        _context = context;
-        _db = _context.Set<T>();
+        Context = context;
+        Db = db;
+        Mapper = mapper;
+        DataSet = Context.Set<T>();
     }
+    
     public async Task<QueryReturn<T>> GetAll(Options<T> options)
     {
-        IQueryable<T> query = _db;
+        IQueryable<T> query = DataSet;
         
         //Add expressions
         if (options.Expression != null)
@@ -74,7 +81,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
 
     public async Task<T> Get(Expression<Func<T, bool>> expression, string? includes = null)
     {
-        IQueryable<T> query = _db;
+        IQueryable<T> query = DataSet;
         
         //Include relations
         if (includes != null)
