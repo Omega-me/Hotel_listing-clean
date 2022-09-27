@@ -6,7 +6,7 @@ namespace Hotel_listing.Application.Common.Utilities
     {
         public static string GenerateBasePath(string directory)
         {
-            var appPath = Environment.CurrentDirectory.Split("\\").SkipLast(1).ToArray();
+            var appPath = Environment.CurrentDirectory.Split(@"\").SkipLast(1).ToArray();
             var path = String.Join("\\", appPath) + directory;
             return path;
         }

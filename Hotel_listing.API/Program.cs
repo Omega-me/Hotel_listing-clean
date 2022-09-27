@@ -1,9 +1,11 @@
 using Hotel_listing.API;
+using Hotel_listing.API.Common;
 using Hotel_listing.API.Middleware;
 using Hotel_listing.Application.Common;
 using Hotel_listing.Infrastructure.Extensions;
 using Hotel_listing.Persistence.Contexts;
 using Hotel_listing.Persistence.Extensions;
+using Hotel_listing.Logger.Common.Configs;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -11,7 +13,7 @@ Log.Logger = new LoggerConfiguration().CreateLogger();
 
 try
 {
-    Log.Information("Application starting...");
+    Log.Information(API_Const.APP_STARTED);
     var builder = WebApplication.CreateBuilder(args);
     LoggerConfig.LoggerConnector(builder);
 
@@ -38,7 +40,7 @@ try
     }
     catch (Exception e)
     {
-        Log.Fatal(e,"An error accured during migrations");
+        Log.Fatal(e,API_Const.MIGRATION_ERROR);
     }
     #endregion
 
@@ -50,7 +52,7 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
-    app.UseCors("CorsPolicy");
+    app.UseCors(API_Const.CORS_POLICY);
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();
@@ -59,10 +61,10 @@ try
 }
 catch (Exception e)
 {
-    Log.Fatal(e, "Application stopped working");
+    Log.Fatal(e, API_Const.APP_STOPED_WORKING);
 }
 finally
 {
-    Log.Information("Application is shut down");
+    Log.Information(API_Const.APP_SHUT_DOWN);
     Log.CloseAndFlush();
 }

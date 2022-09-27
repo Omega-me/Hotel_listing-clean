@@ -46,4 +46,10 @@ public static class API_Const
     internal const string UPDATE = @"Update";
     internal const string UPDATE_PARTIAL = @"Update partial";
     internal const string SERVER_ERROR = "Server error";
+    internal const string APP_STARTED = "Application starting...";
+    internal const string APP_STOPED_WORKING = "Application stopped working";
+    internal const string APP_SHUT_DOWN = "Application is shut down";
+    internal const string MIGRATION_ERROR = "An error accured during migrations";
+    internal const string CORS_POLICY = "CorsPolicy";
 }
+

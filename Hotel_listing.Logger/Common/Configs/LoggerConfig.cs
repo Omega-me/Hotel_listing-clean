@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Serilog.Events;
 
-namespace Hotel_listing.Application.Common
+namespace Hotel_listing.Logger.Common.Configs
 {
     public static class LoggerConfig
     {
         public static void LoggerConnector(WebApplicationBuilder builder)
         {
             //TODO dynamic Application name
-            var logsPath = Utils.GenerateBasePath("\\Hotel_listing.Application\\Logs\\Log_.txt");
+            var logsPath = Utils.GenerateBasePath(@"\Hotel_listing.Logger\Logs\Log_.txt");
             builder.Host.UseSerilog((_, lc) =>lc
                 .WriteTo.File(
                     path:logsPath,

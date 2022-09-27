@@ -9,12 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Hotel_listing.Application\Hotel_listing.Application.csproj" />
-      <ProjectReference Include="..\Hotel_listing.Logger\Hotel_listing.Logger.csproj" />
-      <ProjectReference Include="..\Hotel_listing.Persistence\Hotel_listing.Persistence.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
     </ItemGroup>
 
 </Project>

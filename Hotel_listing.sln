@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel_listing.Persistence",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{2C889B38-70CE-4593-84FD-2DFACD6D6DD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel_listing.Logger", "Hotel_listing.Logger\Hotel_listing.Logger.csproj", "{4DF650FA-0B37-4AA1-B105-3AF19665C087}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{97A40CF8-C4B9-49D1-8D85-9E4752A0DB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A40CF8-C4B9-49D1-8D85-9E4752A0DB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A40CF8-C4B9-49D1-8D85-9E4752A0DB61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF650FA-0B37-4AA1-B105-3AF19665C087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF650FA-0B37-4AA1-B105-3AF19665C087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF650FA-0B37-4AA1-B105-3AF19665C087}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF650FA-0B37-4AA1-B105-3AF19665C087}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{97A40CF8-C4B9-49D1-8D85-9E4752A0DB61} = {AE71605B-380C-4F20-B291-5CA6CFCB2570}
 		{2C889B38-70CE-4593-84FD-2DFACD6D6DD0} = {8E9C3133-F552-4BDC-9533-898372750FDF}
 		{5AC4BD3D-04FA-4AA8-B99F-1E1F8417DD67} = {2C889B38-70CE-4593-84FD-2DFACD6D6DD0}
+		{4DF650FA-0B37-4AA1-B105-3AF19665C087} = {AE71605B-380C-4F20-B291-5CA6CFCB2570}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6287DDD0-21BF-467B-A9D7-914ED48492D6}
