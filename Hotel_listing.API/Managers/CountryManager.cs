@@ -3,6 +3,7 @@ using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
+using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
@@ -12,15 +13,17 @@ namespace Hotel_listing.API.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse<IPagedList<Country>>> GetCountries(IQuery query,Options<Country>? options)
+    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,IMapper mapper,Options<Country>? options)
     {
         var data =await query.Country.GetAll(options);
+        var result = mapper.Map<List<Country>>(data.Results);
         options.Pagination.ResultsCount = data.ResultsCount;
         options.Context.Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(options.Pagination));
-        return new CountryResponse<IPagedList<Country>>
+
+        return new CountryResponse<List<Country>>
         {
             StatusCode = StatusCodes.Status200OK,
-            Results = data.Results,
+            Results = result,
             PageSize = options.Pagination.PageSize,
             Success = true,
             Count = data.Results.Count,

@@ -51,7 +51,7 @@ public partial class BaseController<T>:ControllerBase where T:class
                 return Ok(response);
         }
     }
-    protected virtual ActionResult HandleResponse(BaseResponse<IPagedList<T>,BaseError> response)
+    protected virtual ActionResult HandleResponse(BaseResponse<List<T>,BaseError> response)
     {
         return ResponseBuilder(response);
     }
@@ -59,7 +59,7 @@ public partial class BaseController<T>:ControllerBase where T:class
     {
         return ResponseBuilder(response);
     }
-    protected virtual ActionResult HandleResponse(CountryResponse<IPagedList<Country>> response)
+    protected virtual ActionResult HandleResponse(CountryResponse<List<Country>> response)
     {
         return ResponseBuilder(response);
     }

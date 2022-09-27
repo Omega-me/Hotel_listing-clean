@@ -21,8 +21,6 @@ public static class API_Const
     internal const string SIZE_DESCR = @"Size query string for setting the page size on paginated response data: <em>10 default</em>";
     internal const string PAGE_DESCR = @"Page query string for setting the page number on paginated response data: <em>1 default</em>";
     internal const string MAX_DESCR = @"Max query string for setting the maximum page size on paginated response data: <em>50 default</em>";
-    internal const string ID_DESCR = @"Recor Id";
-    internal const string BODY_DESCR = @"Object of type to create";
     internal const string PRODUCES_JSON = @"application/json";
     internal const string SWAGGER_OP_DESCR_GETALL = @"<strong>Get all the records from the database based on filters, pagination, sorting, and relations</strong>";
     internal const string SWAGGER_OP_DESCR_GET = @"<strong>Get one record</strong>";
@@ -37,7 +35,7 @@ public static class API_Const
     internal const string SWAGGER_RES_DESCR_401 = @"Unauthorized access";
     internal const string SWAGGER_RES_DESCR_403 = @"Forbidden access";
     internal const string SWAGGER_RES_DESCR_404 = @"If object not found";
-    internal const string SWAGGER_RES_DESCR_409 = @"If object has business validation: the response content contains the business validation messages";
+    internal const string SWAGGER_RES_DESCR_422 = @"If object has business validation: the response content contains the business validation messages";
     internal const string SWAGGER_RES_DESCR_500 = @"If internal server errors occur";
     internal const string GET_ALL = @"Get all";
     internal const string GET = @"Get one";
