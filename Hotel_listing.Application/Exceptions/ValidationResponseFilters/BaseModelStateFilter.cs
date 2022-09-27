@@ -21,7 +21,7 @@ public class BaseModelStateFilter:ActionFilterAttribute
                 Results = null,
                 Success = false,
                 Errors = errors,
-                StatusCode = StatusCodes.Status422UnprocessableEntity,
+                StatusCode = StatusCodes.Status400BadRequest,
                 PageNumber = null,
                 PageSize = null,
                 Count = null
@@ -29,7 +29,7 @@ public class BaseModelStateFilter:ActionFilterAttribute
             
             context.Result = new JsonResult(response)
             {
-                StatusCode = StatusCodes.Status422UnprocessableEntity
+                StatusCode = StatusCodes.Status400BadRequest
             };
         }
         base.OnActionExecuting(context);

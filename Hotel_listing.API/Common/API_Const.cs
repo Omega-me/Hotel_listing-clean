@@ -31,11 +31,10 @@ public static class API_Const
     internal const string SWAGGER_RES_DESCR_200 = @"If request resolve with a success response";
     internal const string SWAGGER_RES_DESCR_201 = @"If request creates a record with success";
     internal const string SWAGGER_RES_DESCR_204 = @"If record deleted with sucess";
-    internal const string SWAGGER_RES_DESCR_400 = @"If object has not been deleted: the response content contains the validation messages";
+    internal const string SWAGGER_RES_DESCR_400 = @"The response object contains all the problems";
     internal const string SWAGGER_RES_DESCR_401 = @"Unauthorized access";
     internal const string SWAGGER_RES_DESCR_403 = @"Forbidden access";
     internal const string SWAGGER_RES_DESCR_404 = @"If object not found";
-    internal const string SWAGGER_RES_DESCR_422 = @"If object has business validation: the response content contains the business validation messages";
     internal const string SWAGGER_RES_DESCR_500 = @"If internal server errors occur";
     internal const string GET_ALL = @"Get all";
     internal const string GET = @"Get one";

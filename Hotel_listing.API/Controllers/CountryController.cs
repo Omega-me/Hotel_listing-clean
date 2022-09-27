@@ -31,7 +31,6 @@ public class CountryController:BaseController<Country>
     [SwaggerOperation(null, null, Summary = API_Const.GET_ALL, Description = API_Const.SWAGGER_OP_DESCR_GETALL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? @filter,
@@ -70,7 +69,7 @@ public class CountryController:BaseController<Country>
         [SwaggerParameter(Required = true)]int id,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include)
     {
-        return HandleResponse(await CountryManager.GetCountry(Query,@id,@include));
+        return HandleResponse(await CountryManager.GetCountry(Query,id,@include));
     }
     
     /// <summary>
@@ -81,7 +80,6 @@ public class CountryController:BaseController<Country>
     [SwaggerOperation(null, null, Summary =API_Const.CREATE, Description = API_Const.SWAGGER_OP_DESCR_CREATE)]
     [SwaggerResponse(StatusCodes.Status201Created,API_Const.SWAGGER_RES_DESCR_201, typeof(CountryResponse<CountryDto>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
-    [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> CreateCountry([FromBody][SwaggerRequestBody(Required = true)] Country @data)
     {
@@ -97,11 +95,10 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status204NoContent,API_Const.SWAGGER_RES_DESCR_204)]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
-    [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<IActionResult> DeleteCountry([SwaggerParameter(Required = true)]int id)
     {
-        return HandleResponse(await CountryManager.DeleteCountry(@id,Query,Command));
+        return HandleResponse(await CountryManager.DeleteCountry(id,Query,Command));
     }
 
     /// <summary>
@@ -113,13 +110,12 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200 , typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
-    [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountry(
         [SwaggerParameter(Required = true)]int id,
         [FromBody][SwaggerRequestBody(Required = true)] Country @data)
     {
-        return HandleResponse(await CountryManager.UpdateCountry(@id,@data,Query,Command,Mapper));
+        return HandleResponse(await CountryManager.UpdateCountry(id,@data,Query,Command,Mapper));
     }
 
     /// <summary>
@@ -131,12 +127,11 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200 , typeof(CountryResponse<Country>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
-    [SwaggerResponse(StatusCodes.Status422UnprocessableEntity, API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> UpdateCountryPartial(
-        [SwaggerParameter(Required = true)]int @id,
+        [SwaggerParameter(Required = true)]int id,
         [FromBody][SwaggerRequestBody(Required = true)] JsonPatchDocument @data)
     {
-        return HandleResponse(await CountryManager.UpdateCountryPartial(@id,@data,Query,Command,Mapper));
+        return HandleResponse(await CountryManager.UpdateCountryPartial(id,@data,Query,Command,Mapper));
     }
 }
