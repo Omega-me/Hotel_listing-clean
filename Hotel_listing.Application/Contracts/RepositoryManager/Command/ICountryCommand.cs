@@ -2,5 +2,5 @@
 
 namespace Hotel_listing.Application.Contracts.RepositoryManager.Command;
 
-public interface ICountryCommand:IBaseCommand<Country>
+public interface ICountryCommand : IBaseCommand<Country>
 { }

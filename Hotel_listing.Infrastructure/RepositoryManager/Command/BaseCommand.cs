@@ -26,7 +26,7 @@ public class BaseCommand<T>: IBaseCommand<T> where T:class
     }
 
     public void Update(T entity) {
-        DataSet.Attach(entity);
+        DataSet.Update(entity);
         Context.Entry(entity).State = EntityState.Modified;
     }
 

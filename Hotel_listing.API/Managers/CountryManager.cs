@@ -3,11 +3,9 @@ using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
-using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
-using X.PagedList;
 
 namespace Hotel_listing.API.Managers;
 public static class CountryManager
@@ -129,9 +127,10 @@ public static class CountryManager
         var updatedData=mapper.Map(data, country);
         command.Country.Update(updatedData);
         await command.Save();
+        // await command.Country.UpdateWithRelation(data,id);
         return new CountryResponse<Country>
         {
-            Results = updatedData,
+            Results = data,
             StatusCode = StatusCodes.Status200OK,
             Success = true,
         };
