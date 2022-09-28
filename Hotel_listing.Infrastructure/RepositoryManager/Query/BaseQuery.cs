@@ -36,7 +36,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         }
         
         //Add filters
-        if (!string.IsNullOrWhiteSpace(options.Filter))
+        if (options.Filter!=null)
         {
             var filters = Utils.QueryFilterTransformer(options.Filter);
             string filter = filters[0];
@@ -45,7 +45,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         }
                 
         //Include relations
-        if (!string.IsNullOrWhiteSpace(options.Includes))
+        if (options.Includes!=null)
         {
             string[] includeArray = options.Includes.Split(",").ToArray();
             foreach (var includeProperty in includeArray)
@@ -56,7 +56,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
 
         //Add sorting
         //sort by fields seperated by "," and add _desc after the field for descending order
-        if (!string.IsNullOrWhiteSpace(options.Sort))
+        if (options.Sort!=null)
         {
             query = query.OrderBy(Utils.QuerySortTransformer(options.Sort));
         }

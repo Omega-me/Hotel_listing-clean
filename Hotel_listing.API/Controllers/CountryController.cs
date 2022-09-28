@@ -43,12 +43,12 @@ public class CountryController:BaseController<Country>
         return HandleResponse(await CountryManager.GetCountries(Query,Mapper,new Options<Country>()
         {
             Sort = @sort,
-            Includes = @filter,
-            Filter = @include,
+            Includes = @include,
+            Filter = @filter,
             Context = Context.HttpContext,
             Pagination = new PaginationParams()
             {
-                PageNumber = @page ,
+                PageNumber = @page,
                 PageSize = @size,
                 MaxPageSize = @max
             }
