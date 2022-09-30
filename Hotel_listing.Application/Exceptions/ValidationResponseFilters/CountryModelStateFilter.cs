@@ -23,7 +23,7 @@ public class CountryModelStateFilter : ResultFilterAttribute
                 Results = null,
                 Success = false,
                 Errors = errors,
-                StatusCode = StatusCodes.Status400BadRequest,
+                StatusCode = StatusCodes.Status422UnprocessableEntity,
                 PageNumber = null,
                 PageSize = null,
                 Count = null
@@ -31,7 +31,7 @@ public class CountryModelStateFilter : ResultFilterAttribute
             
             context.Result = new JsonResult(response)
             {
-                StatusCode = StatusCodes.Status400BadRequest
+                StatusCode = StatusCodes.Status422UnprocessableEntity
             };
         }
         base.OnResultExecuting(context);
