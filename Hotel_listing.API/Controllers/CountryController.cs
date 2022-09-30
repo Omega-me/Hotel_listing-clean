@@ -44,13 +44,14 @@ public class CountryController:BaseController<Country>
             Sort = @sort,
             Includes = @include,
             Filter = @filter,
-            Context = Context.HttpContext,
             Pagination = new PaginationParams()
             {
                 PageNumber = @page,
                 PageSize = @size,
                 MaxPageSize = @max
-            }
+            },
+            Context = Context.HttpContext,
+            OrderBy = x=>x.OrderBy(y=>y.Name)
         }));
     }
     

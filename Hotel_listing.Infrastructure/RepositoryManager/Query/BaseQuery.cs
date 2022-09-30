@@ -15,7 +15,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
     protected readonly DatabaseContext Context;
     protected readonly IDataAccessor Db;
     protected readonly IMapper Mapper;
-    protected readonly DbSet<T> DataSet;
+    protected readonly DbSet<T>? DataSet;
 
     public BaseQuery(DatabaseContext context,IDataAccessor db,IMapper mapper)
     {
@@ -27,21 +27,21 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
     
     public async Task<QueryReturn<T>> GetAll(Options<T> options)
     {
-        IQueryable<T> query = DataSet;
+        IQueryable<T>? query = DataSet;
         
         //Add expressions
         if (options.Expression != null)
         {
             query = query.Where(options.Expression);
         }
-        
+
         //Add filters
         if (options.Filter!=null)
         {
             var filters = Utils.QueryFilterTransformer(options.Filter);
             string filter = filters[0];
-            var arr = filters.Skip(1).ToArray();
-            query = query.Where(filter,arr);
+            var values = filters.Skip(1).ToArray();
+            query = query.Where(filter,values);
         }
                 
         //Include relations
@@ -55,14 +55,9 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         }
 
         //Add sorting
-        //sort by fields seperated by "," and add _desc after the field for descending order
         if (options.Sort!=null)
         {
             query = query.OrderBy(Utils.QuerySortTransformer(options.Sort));
-        }
-        else
-        {
-            query = query.OrderBy("id");
         }
 
         //Add OrderBy
@@ -81,7 +76,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
 
     public async Task<T> Get(Expression<Func<T, bool>> expression, string? includes = null)
     {
-        IQueryable<T> query = DataSet;
+        IQueryable<T>? query = DataSet;
         
         //Include relations
         if (includes != null)
