@@ -28,6 +28,7 @@ public static class API_Const
     internal const string SWAGGER_OP_DESCR_DELETE = @"<strong>Delete a record</strong>";
     internal const string SWAGGER_OP_DESCR_UPDATE = @"<Strong>Update a record</strong>";
     internal const string SWAGGER_OP_DESCR_UPDATE_PARTIAL = @"<strong>Update a record partial</strong>";
+    internal const string SWAGGER_OP_DESCR_OPTIONS = @"<strong>Allow header for allowed http methods</strong>";
     internal const string SWAGGER_RES_DESCR_200 = @"If request resolve with a success response";
     internal const string SWAGGER_RES_DESCR_201 = @"If request creates a record with success";
     internal const string SWAGGER_RES_DESCR_204 = @"If record deleted with sucess";
@@ -43,6 +44,7 @@ public static class API_Const
     internal const string DELETE = @"Delete";
     internal const string UPDATE = @"Update";
     internal const string UPDATE_PARTIAL = @"Update partial";
+    internal const string OPTIONS = "Endpoint options";
     internal const string SERVER_ERROR = "Server error";
     internal const string APP_STARTED = "Application starting...";
     internal const string APP_STOPED_WORKING = "Application stopped working";

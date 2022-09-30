@@ -5,6 +5,7 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Hotel_listing.API.Managers;
@@ -161,6 +162,10 @@ public static class CountryManager
             StatusCode = StatusCodes.Status200OK,
             Success = true,
         };
+    }
+    public static void Options(IHttpContextAccessor context)
+    {
+        context.HttpContext.Response.Headers.Add("Allow","GET,POST,PUT,PATCH,OPTIONS");
     }
     #endregion
 }

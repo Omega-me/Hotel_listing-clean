@@ -53,17 +53,17 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
                 query = query.Include(includeProperty);
             }
         }
+        
+        //Add OrderBy
+        if (options.OrderBy != null)
+        {
+            query = options.OrderBy(query);
+        }
 
         //Add sorting
         if (options.Sort!=null)
         {
             query = query.OrderBy(Utils.QuerySortTransformer(options.Sort));
-        }
-
-        //Add OrderBy
-        if (options.OrderBy != null)
-        {
-            query = options.OrderBy(query);
         }
 
         return new QueryReturn<T>

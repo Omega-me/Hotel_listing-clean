@@ -26,6 +26,7 @@ public class CountryController:BaseController<Country>
     /// GET ALL
     /// </summary>
     [HttpGet]
+    [HttpHead]
     [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET_ALL, Description = API_Const.SWAGGER_OP_DESCR_GETALL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
@@ -51,7 +52,7 @@ public class CountryController:BaseController<Country>
                 MaxPageSize = @max
             },
             Context = Context.HttpContext,
-            OrderBy = x=>x.OrderBy(y=>y.Name)
+            OrderBy = x=>x.OrderBy(y=>y.Id)
         }));
     }
     
@@ -137,5 +138,16 @@ public class CountryController:BaseController<Country>
         [FromBody][SwaggerRequestBody(Required = true)] JsonPatchDocument @data)
     {
         return HandleResponse(await CountryManager.UpdateCountryPartial(id,@data,Query,Command,Mapper));
+    }
+
+    /// <summary>
+    /// OPTIONS
+    /// </summary>
+    [HttpOptions]
+    [SwaggerOperation(null, null, Summary = API_Const.OPTIONS, Description = API_Const.SWAGGER_OP_DESCR_OPTIONS)]
+    public IActionResult Options()
+    {
+        CountryManager.Options(Context);
+        return Ok();
     }
 }
