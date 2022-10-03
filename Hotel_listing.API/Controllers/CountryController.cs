@@ -4,6 +4,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using AutoMapper;
 using Hotel_listing.API.Common;
 using Hotel_listing.API.Managers;
+using Hotel_listing.Application.Common.Features;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
@@ -32,7 +33,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<List<Country>>>> GetCountries(
+    public async Task<ActionResult<CountryResponse<List<Country>>>> GetAll(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? @filter,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? @sort,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include,
@@ -40,7 +41,7 @@ public class CountryController:BaseController<Country>
         [FromQuery(Name = API_Const.PAGE)][SwaggerParameter(API_Const.PAGE_DESCR, Required = false)] int @page=1,
         [FromQuery(Name = API_Const.MAX)][SwaggerParameter(API_Const.MAX_DESCR, Required = false)] int @max=50
         ) {
-        return HandleResponse(await CountryManager.GetCountries(Query,Mapper,new Options<Country>()
+        return HandleResponse(await CountryManager.GetCountries(Query,Mapper,Context,new Features<Country>()
         {
             Sort = @sort,
             Includes = @include,
@@ -51,7 +52,6 @@ public class CountryController:BaseController<Country>
                 PageSize = @size,
                 MaxPageSize = @max
             },
-            Context = Context.HttpContext,
             OrderBy = x=>x.OrderBy(y=>y.Id)
         }));
     }
@@ -66,7 +66,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<Country>>> GetCountry(
+    public async Task<ActionResult<CountryResponse<Country>>> Get(
         [SwaggerParameter(Required = true)]int id,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include)
     {
@@ -83,7 +83,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest,API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status422UnprocessableEntity,API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<Country>>> CreateCountry([FromBody][SwaggerRequestBody(Required = true)] Country @data)
+    public async Task<ActionResult<CountryResponse<Country>>> Create([FromBody][SwaggerRequestBody(Required = true)] Country @data)
     {
         return HandleResponse(await CountryManager.CreateCountry(@data, Command, Mapper));
     }
@@ -99,7 +99,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status422UnprocessableEntity,API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
-    public async Task<IActionResult> DeleteCountry([SwaggerParameter(Required = true)]int id)
+    public async Task<IActionResult> Delete([SwaggerParameter(Required = true)]int id)
     {
         return HandleResponse(await CountryManager.DeleteCountry(id,Query,Command));
     }
@@ -115,7 +115,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status422UnprocessableEntity,API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<Country>>> UpdateCountry(
+    public async Task<ActionResult<CountryResponse<Country>>> Update(
         [SwaggerParameter(Required = true)]int id,
         [FromBody][SwaggerRequestBody(Required = true)] Country @data)
     {
@@ -133,7 +133,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status422UnprocessableEntity,API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<Country>>> UpdateCountryPartial(
+    public async Task<ActionResult<CountryResponse<Country>>> UpdatePartial(
         [SwaggerParameter(Required = true)]int id,
         [FromBody][SwaggerRequestBody(Required = true)] JsonPatchDocument @data)
     {

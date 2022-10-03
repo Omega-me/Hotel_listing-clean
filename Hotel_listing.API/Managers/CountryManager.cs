@@ -1,32 +1,31 @@
 ﻿using AutoMapper;
-using Hotel_listing.Application.Common.RepositoryOptions;
+using Hotel_listing.Application.Common.Features;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace Hotel_listing.API.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,IMapper mapper,Options<Country>? options)
+    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,IMapper mapper,IHttpContextAccessor httpContextAccessor,Features<Country>? features)
     {
-        var data =await query.Country.GetAll(options);
+        var data =await query.Country.GetAll(features);
         var result = mapper.Map<List<Country>>(data.Results);
-        options.Pagination.ResultsCount = data.ResultsCount;
-        options.Context.Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(options.Pagination));
+        features.Pagination.ResultsCount = data.ResultsCount;
+        httpContextAccessor.HttpContext.Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(features.Pagination));
 
         return new CountryResponse<List<Country>>
         {
             StatusCode = StatusCodes.Status200OK,
             Results = result,
-            PageSize = options.Pagination.PageSize,
+            PageSize = features.Pagination.PageSize,
             Success = true,
             Count = data.Results.Count,
-            PageNumber = options.Pagination.PageNumber,
+            PageNumber = features.Pagination.PageNumber,
         };
     }
     public static async Task<CountryResponse<Country>> GetCountry(IQuery query, int id, string? includes)

@@ -3,6 +3,7 @@ using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using AutoMapper;
+using Hotel_listing.Application.Common.Features;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Utilities;
 using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
@@ -25,29 +26,29 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         DataSet = Context.Set<T>();
     }
     
-    public async Task<QueryReturn<T>> GetAll(Options<T> options)
+    public async Task<QueryReturn<T>> GetAll(Features<T> features)
     {
         IQueryable<T>? query = DataSet;
         
         //Add expressions
-        if (options.Expression != null)
+        if (features.Expression != null)
         {
-            query = query.Where(options.Expression);
+            query = query.Where(features.Expression);
         }
 
         //Add filters
-        if (options.Filter!=null)
+        if (features.Filter!=null)
         {
-            var filters = Utils.QueryFilterTransformer(options.Filter);
+            var filters = Utils.QueryFilterTransformer(features.Filter);
             string filter = filters[0];
             var values = filters.Skip(1).ToArray();
             query = query.Where(filter,values);
         }
                 
         //Include relations
-        if (options.Includes!=null)
+        if (features.Includes!=null)
         {
-            string[] includeArray = options.Includes.Split(",").ToArray();
+            string[] includeArray = features.Includes.Split(",").ToArray();
             foreach (var includeProperty in includeArray)
             {
                 query = query.Include(includeProperty);
@@ -55,21 +56,21 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         }
         
         //Add OrderBy
-        if (options.OrderBy != null)
+        if (features.OrderBy != null)
         {
-            query = options.OrderBy(query);
+            query = features.OrderBy(query);
         }
 
         //Add sorting
-        if (options.Sort!=null)
+        if (features.Sort!=null)
         {
-            query = query.OrderBy(Utils.QuerySortTransformer(options.Sort));
+            query = query.OrderBy(Utils.QuerySortTransformer(features.Sort));
         }
 
         return new QueryReturn<T>
         {
             Results = await query.AsNoTracking()
-                .ToPagedListAsync(options.Pagination.PageNumber, options.Pagination.PageSize),
+                .ToPagedListAsync(features.Pagination.PageNumber, features.Pagination.PageSize),
             ResultsCount = query.AsNoTracking().Count()
         };
     }
