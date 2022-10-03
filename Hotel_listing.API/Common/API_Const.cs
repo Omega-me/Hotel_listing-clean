@@ -4,6 +4,7 @@ public static class API_Const
 {
     internal const string FILTER = "_filter";
     internal const string SORT = "_sort";
+    internal const string FIELDS = "_fields";
     internal const string INCLUDE = "_include";
     internal const string SIZE = "_size";
     internal const string PAGE = "_page";
@@ -17,6 +18,7 @@ public static class API_Const
     internal const string SORT_DESCR = @"Sort query string in the format <em>field1,field2_desc...</em> 
                        <em>if the <b>fieldname</b> is added as query string the records will be sorted on the ascending order, if the <b>fieldname_desc</b> is added as query string the records will be sorted on descending order</em>
                      ";
+    internal const string FIELDS_DESCR = @"Require only some fields by adding query string <em>field1,field2...</em>";
     internal const string INCLUDE_DESCR = @"Include query string for including relation in the reponse data: <em>Relation1,Realtion2...</em>";
     internal const string SIZE_DESCR = @"Size query string for setting the page size on paginated response data: <em>10 default</em>";
     internal const string PAGE_DESCR = @"Page query string for setting the page number on paginated response data: <em>1 default</em>";

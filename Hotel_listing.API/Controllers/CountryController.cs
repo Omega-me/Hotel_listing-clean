@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using System.Dynamic;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using AutoMapper;
@@ -7,6 +9,7 @@ using Hotel_listing.API.Managers;
 using Hotel_listing.Application.Common.Features;
 using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
+using Hotel_listing.Application.Contracts.DataShaper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
@@ -19,8 +22,8 @@ namespace Hotel_listing.API.Controllers;
 [CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
-    public CountryController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context) 
-        : base(query,command,mapper,context)
+    public CountryController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context,IDataShaper<Country> dataShaper) 
+        : base(query,command,mapper,context,dataShaper)
     { }
 
     /// <summary>
@@ -33,19 +36,21 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<List<Country>>>> GetAll(
+    public async Task<ActionResult<CountryResponse<List<ExpandoObject>>>> GetAll(
         [FromQuery(Name = API_Const.FILTER)][SwaggerParameter(API_Const.QUERY_DESCR, Required = false)]string? @filter,
         [FromQuery(Name = API_Const.SORT)][SwaggerParameter(API_Const.SORT_DESCR, Required = false)] string? @sort,
+        [FromQuery(Name = API_Const.FIELDS)][SwaggerParameter(API_Const.FIELDS_DESCR, Required = false)] string? @fields,
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include,
         [FromQuery(Name = API_Const.SIZE)][SwaggerParameter(API_Const.SIZE_DESCR, Required = false)] int @size=10,
         [FromQuery(Name = API_Const.PAGE)][SwaggerParameter(API_Const.PAGE_DESCR, Required = false)] int @page=1,
         [FromQuery(Name = API_Const.MAX)][SwaggerParameter(API_Const.MAX_DESCR, Required = false)] int @max=50
         ) {
-        return HandleResponse(await CountryManager.GetCountries(Query,Mapper,Context,new Features<Country>()
+        return HandleResponse(await CountryManager.GetCountries(Query,Mapper,Context,DataShaper,new Features<Country>()
         {
             Sort = @sort,
             Includes = @include,
             Filter = @filter,
+            Fields = @fields,
             Pagination = new PaginationParams()
             {
                 PageNumber = @page,
@@ -66,11 +71,12 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
-    public async Task<ActionResult<CountryResponse<Country>>> Get(
+    public async Task<ActionResult<CountryResponse<ExpandoObject>>> Get(
         [SwaggerParameter(Required = true)]int id,
-        [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include)
+        [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include,
+        [FromQuery(Name = API_Const.FIELDS)][SwaggerParameter(API_Const.FIELDS_DESCR, Required = false)] string? @fields)
     {
-        return HandleResponse(await CountryManager.GetCountry(Query,id,@include));
+        return HandleResponse(await CountryManager.GetCountry(Query,DataShaper,id,@include,@fields));
     }
     
     /// <summary>

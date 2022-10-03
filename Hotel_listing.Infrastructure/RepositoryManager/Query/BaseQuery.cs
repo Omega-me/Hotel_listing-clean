@@ -35,7 +35,7 @@ public class BaseQuery<T> : IBaseQuery<T> where T : class
         {
             query = query.Where(features.Expression);
         }
-
+        
         //Add filters
         if (features.Filter!=null)
         {

@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Dynamic;
+using AutoMapper;
 using Hotel_listing.Application.Common.Features;
 using Hotel_listing.Application.Common.Response;
+using Hotel_listing.Application.Contracts.DataShaper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
@@ -11,29 +13,40 @@ namespace Hotel_listing.API.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse<List<Country>>> GetCountries(IQuery query,IMapper mapper,IHttpContextAccessor httpContextAccessor,Features<Country>? features)
+    public static async Task<CountryResponse<List<ExpandoObject>>> GetCountries(
+        IQuery query,
+        IMapper mapper,
+        IHttpContextAccessor httpContextAccessor,
+        IDataShaper<Country> dataShaper,
+        Features<Country>? features)
     {
         var data =await query.Country.GetAll(features);
         var result = mapper.Map<List<Country>>(data.Results);
         features.Pagination.ResultsCount = data.ResultsCount;
         httpContextAccessor.HttpContext.Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(features.Pagination));
 
-        return new CountryResponse<List<Country>>
+        return new CountryResponse<List<ExpandoObject>>
         {
             StatusCode = StatusCodes.Status200OK,
-            Results = result,
+            Results = dataShaper.ShapeData(result,features.Fields) as List<ExpandoObject>,
             PageSize = features.Pagination.PageSize,
             Success = true,
             Count = data.Results.Count,
             PageNumber = features.Pagination.PageNumber,
         };
     }
-    public static async Task<CountryResponse<Country>> GetCountry(IQuery query, int id, string? includes)
+    public static async Task<CountryResponse<ExpandoObject>> GetCountry(
+        IQuery query,
+        IDataShaper<Country> dataShaper,
+        int id,
+        string? includes,
+        string fields)
     {
         Country country = await query.Country.Get(c => c.Id == id, includes);
+
         if (country == null)
         {
-            return new CountryResponse<Country>
+            return new CountryResponse<ExpandoObject>
             {
                 Success = false,
                 StatusCode = StatusCodes.Status404NotFound,
@@ -47,9 +60,9 @@ public static class CountryManager
             };
         }
 
-        return new CountryResponse<Country>
+        return new CountryResponse<ExpandoObject>
         {
-            Results = country,
+            Results =dataShaper.ShapeData(country,fields),
             Success = true,
             StatusCode = StatusCodes.Status200OK,
         };

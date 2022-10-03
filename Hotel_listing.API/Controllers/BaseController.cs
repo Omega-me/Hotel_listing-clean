@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Hotel_listing.Application.Common.Response;
+using Hotel_listing.Application.Contracts.DataShaper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Domain.Entitites;
 using Microsoft.AspNetCore.Mvc;
-using X.PagedList;
 
 namespace Hotel_listing.API.Controllers;
 
@@ -16,13 +16,15 @@ public partial class BaseController<T>:ControllerBase where T:class
     protected readonly IQuery Query;
     protected readonly IMapper Mapper;
     protected readonly IHttpContextAccessor Context;
+    protected readonly IDataShaper<T> DataShaper;
 
-    public BaseController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context)
+    public BaseController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context,IDataShaper<T> dataShaper)
     {
         Query = query;
         Command = command;
         Mapper = mapper;
         Context = context;
+        DataShaper = dataShaper;
     }
 
     // A set of virtual methods here which can be override on the children classes 

@@ -1,6 +1,9 @@
-﻿using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+﻿using Hotel_listing.Application.Contracts.DataShaper;
+using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
+using Hotel_listing.Domain.Entitites;
+using Hotel_listing.Infrastructure.DataShaper;
 using Hotel_listing.Infrastructure.RepositoryManager.Command;
 using Hotel_listing.Infrastructure.RepositoryManager.DataAccessor;
 using Hotel_listing.Infrastructure.RepositoryManager.Query;
@@ -12,8 +15,10 @@ public static class InfrastructureServiceRegistration
 {
     public static void ConfigureRepository(this IServiceCollection serviceCollection)
     {
+        DataShaperService.ConfigureRepository(serviceCollection);
         serviceCollection.AddTransient<IQuery,Query>();
         serviceCollection.AddTransient<ICommands,Commands>();
         serviceCollection.AddTransient<IDataAccessor, DataAccessor>();
+        serviceCollection.AddScoped<IDataShaper<Country>, DataShaper<Country>>();
     }
 }
