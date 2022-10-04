@@ -35,6 +35,8 @@ public class BaseCommand<T>: IBaseCommand<T> where T:class
         Context.Entry(entity).State = EntityState.Modified;
     }
     
+    
+    
     public async Task Delete(int id)
     {
         var entity =await DataSet.FindAsync(id);

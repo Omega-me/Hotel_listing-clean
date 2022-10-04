@@ -1,5 +1,4 @@
 ﻿using System.Dynamic;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -28,10 +27,10 @@ public class CountryController:BaseController<Country>
 
     /// <summary>
     /// GET ALL
-    /// </summary>
+    /// </summary>p
     [HttpGet]
     [HttpHead]
-    [Produces(API_Const.PRODUCES_JSON)]
+    [Produces(API_Const.PRODUCES_JSON,new []{API_Const.PRODUCES_XML,"text/xml"})]
     [SwaggerOperation(null, null, Summary = API_Const.GET_ALL, Description = API_Const.SWAGGER_OP_DESCR_GETALL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
@@ -45,7 +44,7 @@ public class CountryController:BaseController<Country>
         [FromQuery(Name = API_Const.PAGE)][SwaggerParameter(API_Const.PAGE_DESCR, Required = false)] int @page=1,
         [FromQuery(Name = API_Const.MAX)][SwaggerParameter(API_Const.MAX_DESCR, Required = false)] int @max=50
         ) {
-        return HandleResponse(await CountryManager.GetCountries(Query,Mapper,Context,DataShaper,new Features<Country>()
+        return HandleResponse(await CountryManager.GetAll(Query,Mapper,Context,DataShaper,new Features<Country>()
         {
             Sort = @sort,
             Includes = @include,
@@ -60,7 +59,13 @@ public class CountryController:BaseController<Country>
             OrderBy = x=>x.OrderBy(y=>y.Id)
         }));
     }
-    
+
+    [HttpPost("filter")]
+    public async Task<ActionResult<CountryResponse<List<Country>>>> GetWithFilters()
+    {
+        return HandleResponse(await CountryManager.GetWithFilters());
+    }
+
     /// <summary>
     /// GET ONE
     /// </summary>
@@ -76,7 +81,7 @@ public class CountryController:BaseController<Country>
         [FromQuery(Name = API_Const.INCLUDE)][SwaggerParameter(API_Const.INCLUDE_DESCR, Required = false)] string? @include,
         [FromQuery(Name = API_Const.FIELDS)][SwaggerParameter(API_Const.FIELDS_DESCR, Required = false)] string? @fields)
     {
-        return HandleResponse(await CountryManager.GetCountry(Query,DataShaper,id,@include,@fields));
+        return HandleResponse(await CountryManager.Get(Query,DataShaper,id,@include,@fields));
     }
     
     /// <summary>
@@ -91,7 +96,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500,typeof(AppException))]
     public async Task<ActionResult<CountryResponse<Country>>> Create([FromBody][SwaggerRequestBody(Required = true)] Country @data)
     {
-        return HandleResponse(await CountryManager.CreateCountry(@data, Command, Mapper));
+        return HandleResponse(await CountryManager.Create(@data, Command, Mapper));
     }
     
     /// <summary>
@@ -107,7 +112,7 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<IActionResult> Delete([SwaggerParameter(Required = true)]int id)
     {
-        return HandleResponse(await CountryManager.DeleteCountry(id,Query,Command));
+        return HandleResponse(await CountryManager.Delete(id,Query,Command));
     }
 
     /// <summary>
@@ -125,7 +130,7 @@ public class CountryController:BaseController<Country>
         [SwaggerParameter(Required = true)]int id,
         [FromBody][SwaggerRequestBody(Required = true)] Country @data)
     {
-        return HandleResponse(await CountryManager.UpdateCountry(id,@data,Query,Command,Mapper));
+        return HandleResponse(await CountryManager.Update(id,@data,Query,Command,Mapper));
     }
 
     /// <summary>
@@ -143,7 +148,7 @@ public class CountryController:BaseController<Country>
         [SwaggerParameter(Required = true)]int id,
         [FromBody][SwaggerRequestBody(Required = true)] JsonPatchDocument @data)
     {
-        return HandleResponse(await CountryManager.UpdateCountryPartial(id,@data,Query,Command,Mapper));
+        return HandleResponse(await CountryManager.UpdatePartial(id,@data,Query,Command,Mapper));
     }
 
     /// <summary>

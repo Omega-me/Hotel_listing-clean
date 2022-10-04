@@ -24,6 +24,7 @@ public static class API_Const
     internal const string PAGE_DESCR = @"Page query string for setting the page number on paginated response data: <em>1 default</em>";
     internal const string MAX_DESCR = @"Max query string for setting the maximum page size on paginated response data: <em>50 default</em>";
     internal const string PRODUCES_JSON = @"application/json";
+    internal const string PRODUCES_XML = @"application/xml";
     internal const string SWAGGER_OP_DESCR_GETALL = @"<strong>Get all the records from the database based on filters, pagination, sorting, and relations</strong>";
     internal const string SWAGGER_OP_DESCR_GET = @"<strong>Get one record</strong>";
     internal const string SWAGGER_OP_DESCR_CREATE = @"<strong>Insert a record</strong>";

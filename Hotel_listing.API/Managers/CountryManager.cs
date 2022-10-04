@@ -13,7 +13,7 @@ namespace Hotel_listing.API.Managers;
 public static class CountryManager
 {
     #region Managers and response builders
-    public static async Task<CountryResponse<List<ExpandoObject>>> GetCountries(
+    public static async Task<CountryResponse<List<ExpandoObject>>> GetAll(
         IQuery query,
         IMapper mapper,
         IHttpContextAccessor httpContextAccessor,
@@ -35,7 +35,15 @@ public static class CountryManager
             PageNumber = features.Pagination.PageNumber,
         };
     }
-    public static async Task<CountryResponse<ExpandoObject>> GetCountry(
+
+    public static async Task<CountryResponse<List<ExpandoObject>>> GetWithFilters()
+    {
+        return new CountryResponse<List<ExpandoObject>>()
+        {
+
+        };
+    } 
+    public static async Task<CountryResponse<ExpandoObject>> Get(
         IQuery query,
         IDataShaper<Country> dataShaper,
         int id,
@@ -67,7 +75,7 @@ public static class CountryManager
             StatusCode = StatusCodes.Status200OK,
         };
     }
-    public static async Task<CountryResponse<Country>> CreateCountry(Country data,ICommands command,IMapper mapper)
+    public static async Task<CountryResponse<Country>> Create(Country data,ICommands command,IMapper mapper)
     {
         Country country = mapper.Map<Country>(data);
         await command.Country.Insert(country);
@@ -79,7 +87,7 @@ public static class CountryManager
             StatusCode = StatusCodes.Status201Created
         };
     }
-    public static async Task<CountryResponse<Country>> DeleteCountry(int id,IQuery query,ICommands command)
+    public static async Task<CountryResponse<Country>> Delete(int id,IQuery query,ICommands command)
     {
         Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)
@@ -104,7 +112,7 @@ public static class CountryManager
             StatusCode = StatusCodes.Status204NoContent
         };
     }
-    public static async Task<CountryResponse<Country>> UpdateCountry(int id, Country data, IQuery query, ICommands command, IMapper mapper)
+    public static async Task<CountryResponse<Country>> Update(int id, Country data, IQuery query, ICommands command, IMapper mapper)
     {
         if (id != data.Id)
         {
@@ -148,7 +156,7 @@ public static class CountryManager
             Success = true,
         };
     }
-    public static async Task<CountryResponse<Country>> UpdateCountryPartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
+    public static async Task<CountryResponse<Country>> UpdatePartial(int id, JsonPatchDocument data, IQuery query, ICommands command,IMapper mapper)
     {
         Country country = await query.Country.Get(c => c.Id == id);
         if (country == null)

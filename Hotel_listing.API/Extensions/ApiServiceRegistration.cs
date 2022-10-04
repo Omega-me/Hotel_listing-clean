@@ -1,4 +1,5 @@
-﻿using FluentValidation.AspNetCore;
+﻿using System.Runtime.CompilerServices;
+using FluentValidation.AspNetCore;
 using Hotel_listing.Application.Common;
 using Hotel_listing.Application.Exceptions.ValidationResponseFilters;
 using Microsoft.AspNetCore.Mvc;
@@ -31,10 +32,12 @@ public static class ServiceExtensions
     }
     public static void ConfigureControllers(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddControllers(o =>
+        serviceCollection.AddControllers(config =>
             {
-                o.Filters.Add(typeof(BaseModelStateFilter));
-            })
+                config.Filters.Add(typeof(BaseModelStateFilter));
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters()
             .AddFluentValidation(v =>
             {
                 v.RegisterValidatorsFromAssemblyContaining<RegisterValidator>();
