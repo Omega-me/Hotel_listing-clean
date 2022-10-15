@@ -5,7 +5,9 @@ using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.DataShaper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
+using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
+using Hotel_listing.Infrastructure.RepositoryManager.Query;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 
@@ -36,7 +38,7 @@ public static class CountryManager
         };
     }
 
-    public static async Task<CountryResponse<List<ExpandoObject>>> GetWithFilters()
+    public static CountryResponse<List<ExpandoObject>> GetWithFilters()
     {
         return new CountryResponse<List<ExpandoObject>>()
         {
@@ -185,7 +187,7 @@ public static class CountryManager
     }
     public static void Options(IHttpContextAccessor context)
     {
-        context.HttpContext.Response.Headers.Add("Allow","GET,POST,PUT,PATCH,OPTIONS");
+        context.HttpContext.Response.Headers.Add("Allow","GET,POST,PUT,PATCH,OPTIONS,HEAD");
     }
     #endregion
 }

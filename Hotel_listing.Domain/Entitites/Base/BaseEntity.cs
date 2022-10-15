@@ -1,4 +1,4 @@
-﻿namespace Hotel_listing.Domain.Entitites;
+﻿namespace Hotel_listing.Domain.Entitites.Base;
 
 [Serializable]
 public abstract class BaseEntity

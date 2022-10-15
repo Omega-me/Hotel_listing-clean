@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Hotel_listing.Domain.Entitites.Base;
 
 namespace Hotel_listing.Domain.Entitites;
 

@@ -1,4 +1,5 @@
-﻿using Hotel_listing.Domain.ValueObjects;
+﻿using Hotel_listing.Domain.Entitites.Base;
+using Hotel_listing.Domain.ValueObjects;
 
 namespace Hotel_listing.Domain.Entitites;
 

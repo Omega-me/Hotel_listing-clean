@@ -61,9 +61,9 @@ public class CountryController:BaseController<Country>
     }
 
     [HttpPost("filter")]
-    public async Task<ActionResult<CountryResponse<List<Country>>>> GetWithFilters()
+    public ActionResult<CountryResponse<List<Country>>> GetWithFilters()
     {
-        return HandleResponse(await CountryManager.GetWithFilters());
+        return HandleResponse(CountryManager.GetWithFilters());
     }
 
     /// <summary>
