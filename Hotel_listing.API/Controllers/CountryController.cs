@@ -60,7 +60,8 @@ public class CountryController:BaseController<Country>
         }));
     }
 
-    [HttpPost("filter")] //TODO filter endpoint with post request
+    //TODO filter endpoint with post request,HATEOAS,ROOT Document,API Versioning,Caching,Rate Limiting and Throttling
+    [HttpPost("filter")] 
     [Produces(API_Const.PRODUCES_JSON,new []{API_Const.PRODUCES_XML})]
     public ActionResult<CountryResponse<List<Country>>> GetWithFilters()
     {
