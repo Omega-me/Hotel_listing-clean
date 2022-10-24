@@ -2,6 +2,8 @@
 
 public class AppException
 {
+    public AppException()
+    { }
     public AppException(int statusCode, string message, string? details=null)
     {
         StatusCode = statusCode;

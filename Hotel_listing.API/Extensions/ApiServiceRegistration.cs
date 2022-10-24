@@ -37,7 +37,7 @@ public static class ServiceExtensions
                 config.Filters.Add(typeof(BaseModelStateFilter));
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters()
+            })
             .AddFluentValidation(v =>
             {
                 v.RegisterValidatorsFromAssemblyContaining<RegisterValidator>();
@@ -49,6 +49,6 @@ public static class ServiceExtensions
     {
         serviceCollection.Configure<ApiBehaviorOptions>(
             o=>o.SuppressModelStateInvalidFilter=true
-        );
+            );
     }
 }

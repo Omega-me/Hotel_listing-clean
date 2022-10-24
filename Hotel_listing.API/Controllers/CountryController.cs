@@ -30,7 +30,7 @@ public class CountryController:BaseController<Country>
     /// </summary>p
     [HttpGet]
     [HttpHead]
-    [Produces(API_Const.PRODUCES_JSON,new []{API_Const.PRODUCES_XML,"text/xml"})]
+    [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET_ALL, Description = API_Const.SWAGGER_OP_DESCR_GETALL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
@@ -60,7 +60,8 @@ public class CountryController:BaseController<Country>
         }));
     }
 
-    [HttpPost("filter")]
+    [HttpPost("filter")] //TODO filter endpoint with post request
+    [Produces(API_Const.PRODUCES_JSON,new []{API_Const.PRODUCES_XML})]
     public ActionResult<CountryResponse<List<Country>>> GetWithFilters()
     {
         return HandleResponse(CountryManager.GetWithFilters());
@@ -108,7 +109,6 @@ public class CountryController:BaseController<Country>
     [SwaggerResponse(StatusCodes.Status204NoContent,API_Const.SWAGGER_RES_DESCR_204)]
     [SwaggerResponse(StatusCodes.Status400BadRequest, API_Const.SWAGGER_RES_DESCR_400, typeof(CountryResponse<object>))]
     [SwaggerResponse(StatusCodes.Status404NotFound, API_Const.SWAGGER_RES_DESCR_404)]
-    [SwaggerResponse(StatusCodes.Status422UnprocessableEntity,API_Const.SWAGGER_RES_DESCR_422)]
     [SwaggerResponse(StatusCodes.Status500InternalServerError, API_Const.SWAGGER_RES_DESCR_500, typeof(AppException))]
     public async Task<IActionResult> Delete([SwaggerParameter(Required = true)]int id)
     {
