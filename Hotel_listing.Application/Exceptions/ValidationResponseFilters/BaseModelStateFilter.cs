@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Hotel_listing.Application.Exceptions.ValidationResponseFilters;
-
 public class BaseModelStateFilter:ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)

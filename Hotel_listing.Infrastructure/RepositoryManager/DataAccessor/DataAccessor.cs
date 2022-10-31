@@ -2,7 +2,6 @@
 using System.Data;
 using Hotel_listing.Application.Common.Features;
 using Microsoft.Extensions.Configuration;
-using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Npgsql;
 

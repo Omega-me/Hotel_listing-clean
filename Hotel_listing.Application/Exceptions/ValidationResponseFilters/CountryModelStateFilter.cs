@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Hotel_listing.Application.Exceptions.ValidationResponseFilters;
-
 public class CountryModelStateFilter : ResultFilterAttribute
 {
     public override void OnResultExecuting(ResultExecutingContext context)

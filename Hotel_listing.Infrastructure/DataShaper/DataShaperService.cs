@@ -4,10 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Hotel_listing.Infrastructure.DataShaper;
 
-public static class DataShaperService
+public static partial class DataShaperService
 {
-    public static void ConfigureRepository(this IServiceCollection serviceCollection)
+    public static void ConfigureDataShaper(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IDataShaper<Country>, DataShaper<Country>>();
+        serviceCollection.AddScoped<IDataShaper<Hotel>, DataShaper<Hotel>>();
     }
 }

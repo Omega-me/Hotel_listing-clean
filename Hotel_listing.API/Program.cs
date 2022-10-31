@@ -1,5 +1,6 @@
-using Hotel_listing.API;
+using AspNetCoreRateLimit;
 using Hotel_listing.API.Common;
+using Hotel_listing.API.Extensions;
 using Hotel_listing.API.Middleware;
 using Hotel_listing.Application.Common;
 using Hotel_listing.Infrastructure.Extensions;
@@ -26,6 +27,12 @@ try
     builder.Services.ConfigureSwagger();
     builder.Services.AddAutoMapper(typeof(MapperConfig));
     builder.Services.ConfigureApiBehavior();
+    builder.Services.ConfigureVersioning();
+    builder.Services.AddMemoryCache();
+    builder.Services.ConfigureRateLimitingOptions();
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.ConfigureResponseCaching();
+    builder.Services.ConfigureHttpCacheHeaders();
     #endregion
 
     var app = builder.Build();
@@ -52,7 +59,10 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    app.UseIpRateLimiting();
     app.UseCors(API_Const.CORS_POLICY);
+    app.UseResponseCaching();
+    app.UseHttpCacheHeaders();
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();

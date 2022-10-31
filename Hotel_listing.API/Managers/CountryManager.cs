@@ -4,6 +4,7 @@ using Hotel_listing.Application.Common.Features;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.DataShaper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Domain.Entitites;
@@ -37,14 +38,7 @@ public static class CountryManager
             PageNumber = features.Pagination.PageNumber,
         };
     }
-
-    public static CountryResponse<List<ExpandoObject>> GetWithFilters()
-    {
-        return new CountryResponse<List<ExpandoObject>>()
-        {
-
-        };
-    } 
+    
     public static async Task<CountryResponse<ExpandoObject>> Get(
         IQuery query,
         IDataShaper<Country> dataShaper,
@@ -77,6 +71,25 @@ public static class CountryManager
             StatusCode = StatusCodes.Status200OK,
         };
     }
+    public static async Task<CountryResponse<List<Country>>> GetWithFilters(IDataAccessor db,IMapper mapper)
+    {
+        var data = await db.Query<Country, dynamic>(new DataAccessorOptions<dynamic>
+        {   
+            Prams = {},
+            Sql = @"Select * from ""Country"" ",
+            ConnectionId = "sqlConnectionPsql",
+            SqlType = Sqltype.Sql
+        });
+        List<Country> countries = mapper.Map<List<Country>>(data);
+        
+        return new CountryResponse<List<Country>>()
+        {
+            Count = countries.Count,
+            Success = true,
+            StatusCode = StatusCodes.Status200OK,
+            Results = countries
+        };
+    } 
     public static async Task<CountryResponse<Country>> Create(Country data,ICommands command,IMapper mapper)
     {
         Country country = mapper.Map<Country>(data);
@@ -150,7 +163,6 @@ public static class CountryManager
         var updatedData=mapper.Map(data, country);
         command.Country.Update(updatedData);
         await command.Save();
-        // await command.Country.UpdateWithRelation(data,id);
         return new CountryResponse<Country>
         {
             Results = data,

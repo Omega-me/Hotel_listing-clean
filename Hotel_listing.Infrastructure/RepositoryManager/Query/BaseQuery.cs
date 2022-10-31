@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using AutoMapper;
 using Hotel_listing.Application.Common.Features;
-using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Utilities;
 using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Persistence.Contexts;

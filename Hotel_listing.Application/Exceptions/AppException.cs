@@ -1,5 +1,4 @@
 ﻿namespace Hotel_listing.Application.Exceptions;
-
 public class AppException
 {
     public AppException()

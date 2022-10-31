@@ -1,7 +1,6 @@
 ﻿using Hotel_listing.Application.Contracts.Response;
 
 namespace Hotel_listing.Application.Common.Response;
-
 public class BaseResponse<TData,TError> : IBaseResponse<TData, TError>
 {
     public bool Success { get; set; }

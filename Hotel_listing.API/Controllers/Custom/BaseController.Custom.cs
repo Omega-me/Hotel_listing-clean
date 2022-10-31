@@ -7,12 +7,5 @@ namespace Hotel_listing.API.Controllers;
 
 public partial class BaseController<T> where T:class
 {
-    protected virtual ActionResult HandleResponse(CountryResponse<ExpandoObject> response)
-    {
-        return ResponseBuilder(response);
-    }
-    protected virtual ActionResult HandleResponse(CountryResponse<List<ExpandoObject>> response)
-    {
-        return ResponseBuilder(response);
-    }
+   
 }

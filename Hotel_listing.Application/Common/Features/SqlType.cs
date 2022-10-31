@@ -1,5 +1,4 @@
-﻿namespace Hotel_listing.Application.Common.RepositoryOptions;
-
+﻿namespace Hotel_listing.Application.Common.Features;
 public enum Sqltype
 {
     Sql=0,

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using Hotel_listing.Application.DTO.Country;
 
-namespace Hotel_listing.Application.Validation.Country;
+namespace Hotel_listing.Application.DTO.Country.Validatons;
 
 public class BaseCountryDtoValidator:AbstractValidator<BaseCountryDto>
 {

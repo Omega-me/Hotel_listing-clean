@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hotel_listing.Application.Common.Features;
-using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;

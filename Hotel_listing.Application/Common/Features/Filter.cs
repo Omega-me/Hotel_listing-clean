@@ -1,5 +1,4 @@
 ﻿namespace Hotel_listing.Application.Common.Features;
-
 public class Filter
 {
     public string Field { get; set; }

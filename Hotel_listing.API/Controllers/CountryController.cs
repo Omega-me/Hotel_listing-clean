@@ -6,10 +6,10 @@ using AutoMapper;
 using Hotel_listing.API.Common;
 using Hotel_listing.API.Managers;
 using Hotel_listing.Application.Common.Features;
-using Hotel_listing.Application.Common.RepositoryOptions;
 using Hotel_listing.Application.Common.Response;
 using Hotel_listing.Application.Contracts.DataShaper;
 using Hotel_listing.Application.Contracts.RepositoryManager.Command;
+using Hotel_listing.Application.Contracts.RepositoryManager.DataAccessor;
 using Hotel_listing.Application.Contracts.RepositoryManager.Query;
 using Hotel_listing.Application.DTO.Country;
 using Hotel_listing.Application.Exceptions;
@@ -21,8 +21,14 @@ namespace Hotel_listing.API.Controllers;
 [CountryModelStateFilter]
 public class CountryController:BaseController<Country>
 {
-    public CountryController(IQuery query, ICommands command, IMapper mapper, IHttpContextAccessor context,IDataShaper<Country> dataShaper) 
-        : base(query,command,mapper,context,dataShaper)
+    public CountryController(
+        IQuery query,
+        ICommands command,
+        IDataAccessor db,
+        IMapper mapper,
+        IHttpContextAccessor context,
+        IDataShaper<Country> dataShaper)
+        : base(query,command,db,mapper,context,dataShaper)
     { }
 
     /// <summary>
@@ -30,6 +36,7 @@ public class CountryController:BaseController<Country>
     /// </summary>p
     [HttpGet]
     [HttpHead]
+    [ResponseCache(Duration = 60)]
     [Produces(API_Const.PRODUCES_JSON)]
     [SwaggerOperation(null, null, Summary = API_Const.GET_ALL, Description = API_Const.SWAGGER_OP_DESCR_GETALL)]
     [SwaggerResponse(StatusCodes.Status200OK,API_Const.SWAGGER_RES_DESCR_200, typeof(CountryResponse<List<Country>>))]
@@ -59,13 +66,16 @@ public class CountryController:BaseController<Country>
             OrderBy = x=>x.OrderBy(y=>y.Id)
         }));
     }
-
-    //TODO filter endpoint with post request,HATEOAS,ROOT Document,API Versioning,Caching,Rate Limiting and Throttling
+    
+    //TODO filter and search endpoint with post request
+    /// <summary>
+    /// GET WITH FILTERS 
+    /// </summary>
     [HttpPost("filter")] 
     [Produces(API_Const.PRODUCES_JSON,new []{API_Const.PRODUCES_XML})]
-    public ActionResult<CountryResponse<List<Country>>> GetWithFilters()
+    public async Task<ActionResult<CountryResponse<List<Country>>>> GetWithFilters()
     {
-        return HandleResponse(CountryManager.GetWithFilters());
+        return HandleResponse(await CountryManager.GetWithFilters(Db,Mapper));
     }
 
     /// <summary>

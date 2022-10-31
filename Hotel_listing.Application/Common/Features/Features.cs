@@ -1,8 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Hotel_listing.Application.Common.RepositoryOptions;
 
 namespace Hotel_listing.Application.Common.Features;
-
 public class Features<T>
 {
     public Expression<Func<T,bool>>? Expression { get; set; }

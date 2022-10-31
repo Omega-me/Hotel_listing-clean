@@ -1,7 +1,6 @@
 ﻿using X.PagedList;
 
-namespace Hotel_listing.Application.Common.RepositoryOptions;
-
+namespace Hotel_listing.Application.Common.Features;
 public class QueryReturn<T>
 {
     public IPagedList<T> Results { get; set; }

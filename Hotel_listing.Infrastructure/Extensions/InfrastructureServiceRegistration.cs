@@ -15,10 +15,9 @@ public static class InfrastructureServiceRegistration
 {
     public static void ConfigureRepository(this IServiceCollection serviceCollection)
     {
-        DataShaperService.ConfigureRepository(serviceCollection);
+        serviceCollection.ConfigureDataShaper();
         serviceCollection.AddTransient<IQuery,Query>();
         serviceCollection.AddTransient<ICommands,Commands>();
         serviceCollection.AddTransient<IDataAccessor, DataAccessor>();
-        serviceCollection.AddScoped<IDataShaper<Country>, DataShaper<Country>>();
     }
 }
